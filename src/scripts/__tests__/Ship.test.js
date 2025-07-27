@@ -1,5 +1,4 @@
-/// <reference types="jest" />
-import Ship from "../Ship";
+import Ship from "../classes/Ship";
 
 let ship
 beforeEach(() => {

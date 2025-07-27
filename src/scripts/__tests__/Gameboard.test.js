@@ -1,6 +1,5 @@
-import { experiments } from "webpack";
-import Gameboard from "../Gameboard";
-import Ship from "../Ship";
+import Gameboard from "../classes/Gameboard";
+import Ship from "../classes/Ship";
 
 describe("adding ships", () => {
     let gameboard
@@ -65,6 +64,8 @@ describe("receiving attacks", () => {
     })
 
     test("win game", () => {
+        gameboard.boatAmt = 2
+        
         // sink ship4
         gameboard.receiveAttack([0,2])
         gameboard.receiveAttack([0,3])
@@ -73,7 +74,6 @@ describe("receiving attacks", () => {
         gameboard.receiveAttack([0,0])
         gameboard.receiveAttack([1,0])
 
-        gameboard.boatAmt = 2
         expect(gameboard.isGameOver()).toBe(true)
     })
 })
