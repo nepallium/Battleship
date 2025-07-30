@@ -18,7 +18,7 @@ Computer's board (left):
 
 export function loadBoard(playerSectionElement) {
     playerSectionElement.innerHTML = ""
-    const player = playerSectionElement.classList.contains("player-1") ? gameState.player1 : gameState.player2
+    const player = gameState.getPlayerFromElement(playerSectionElement)
     const playerBoard = player.gameboard;
 
 
@@ -32,12 +32,9 @@ export function loadBoard(playerSectionElement) {
                 cell.dataset.value = cellVal;
             } else {
                 // cellVal is a ship
+                const ship = cellVal
                 cell.dataset.value = "ship"
-                cell.dataset.shipName = cellVal.name 
-            }
-
-            if (cellVal === 1) {
-                fillCell(cell)
+                cell.dataset.shipName = ship.name
             }
 
             cell.dataset.position = JSON.stringify([i, j]);
@@ -52,6 +49,14 @@ export function loadBoard(playerSectionElement) {
     }
 }
 
-function fillCell(div) {
-    div.style.backgroundColor = "red"
+export function styleSunkenShip(shipCell) {
+    console.log('hi')
+    const player = shipCell.parentElement
+    const shipName = shipCell.dataset.shipName
+
+    const shipCells = player.querySelectorAll(`[data-ship-name="${shipName}"]`)
+
+    for (const cell of shipCells) {
+        cell.classList.add("sunk")
+    }
 }

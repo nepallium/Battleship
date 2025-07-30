@@ -12,25 +12,38 @@ section.board {
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
     gap: 0.5rem;
 
-    div {
+    .cell {
         background-color: gray;
         width: 2rem;
         height: 2rem;
     }
 
-    &.player-1 div:hover {
-        cursor: pointer;
+    .cell[data-value="1"] {
+        background-color: yellow;
+    }
+
+    .cell[data-value="ship"].hit {
+        background-color: red;
+    }
+
+    .cell[data-value="ship"].sunk {
+        background-color: red;
+        border-style: solid;
+        border-color: black;
+        border-width: 5px;
     }
 }
 
 /* COMPUTER */
 section.board.player-1 {
-    
+    .cell:hover {
+        cursor: pointer;
+    }
 }
 
 /* USER */
 section.board.player-2 {
-    div[data-value="ship"] {
+    .cell[data-value="ship"] {
         background-color: blue;
     }
 }
