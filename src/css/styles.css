@@ -18,7 +18,19 @@ section.board {
         height: 2rem;
     }
 
-    div:hover {
+    &.player-1 div:hover {
         cursor: pointer;
+    }
+}
+
+/* COMPUTER */
+section.board.player-1 {
+    
+}
+
+/* USER */
+section.board.player-2 {
+    div[data-value="ship"] {
+        background-color: blue;
     }
 }
