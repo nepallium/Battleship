@@ -2,20 +2,6 @@ import gameState from "./gameState";
 import Ship from "./classes/Ship";
 import { listenForAttack } from "./listeners";
 
-/*
-Pseudocode logic for board loading
-
-User's board:
-- show misses
-- show hits
-- show all ships
-
-Computer's board (left):
-- show misses
-- show hits
-- show full ship hit with outline or smt
-*/
-
 export function loadBoard(playerSectionElement) {
     playerSectionElement.innerHTML = ""
     const player = gameState.getPlayerFromElement(playerSectionElement)
@@ -50,7 +36,6 @@ export function loadBoard(playerSectionElement) {
 }
 
 export function styleSunkenShip(shipCell) {
-    console.log('hi')
     const player = shipCell.parentElement
     const shipName = shipCell.dataset.shipName
 

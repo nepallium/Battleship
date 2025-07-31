@@ -1,7 +1,6 @@
 export default class Gameboard {
-    #boardSize;
     constructor() {
-        this.#boardSize = 10;
+        this.boardSize = 10;
         this.boatAmt = 5;
         this.board = this.#initBoard();
         this.boatsHitCtr = 0;
@@ -42,8 +41,8 @@ export default class Gameboard {
     }
 
     #initBoard() {
-        return Array.from({ length: this.#boardSize }, () =>
-            new Array(this.#boardSize).fill(0)
+        return Array.from({ length: this.boardSize }, () =>
+            new Array(this.boardSize).fill(0)
         );
     }
 }

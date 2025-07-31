@@ -5,7 +5,7 @@ import Player from "./classes/Player";
 import Gameboard from "./classes/Gameboard";
 import Ship from "./classes/Ship";
 import { loadBoard } from "./domStuff";
-import resetGame from "./resetGame";
+import {resetGame} from "./gameFunctions";
 import gameState from "./gameState";
 
 // Set up the game with predetermined ship coordinates
