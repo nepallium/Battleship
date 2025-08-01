@@ -9,8 +9,31 @@ export function listenForAttack(div) {
     const player = gameState.getPlayerFromElement(playerSectionElement);
 
     div.addEventListener("click", () => {
-        processAttack(div, player);
-        // Computer makes move after player's move
-        setTimeout(() => computerMakeMove(), 500);
+        handleAttackClick(div, player);
     });
+}
+
+function handleAttackClick(div, player) {
+    div.style.pointerEvents = "none";
+    processAttack(div, player);
+
+    // Disable the entire board section to prevent further clicks
+    disableBoard();
+
+    // computer makes moves
+    setTimeout(() => {
+        computerMakeMove();
+        // Re-enable the board after computer move completes
+        enableBoard();
+    }, 250);
+}
+
+function disableBoard() {
+    const player1Section = document.querySelector("section.player-1");
+    player1Section.style.pointerEvents = "none";
+}
+
+function enableBoard() {
+    const player1Section = document.querySelector("section.player-1");
+    player1Section.style.pointerEvents = "auto";
 }
