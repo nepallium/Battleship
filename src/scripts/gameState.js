@@ -10,6 +10,10 @@ class GameState {
     getPlayerFromElement(playerSectionElement) {
         return playerSectionElement.classList.contains("player-1") ? this.player1 : this.player2
     }
+
+    getElementFromPlayer(player) {
+        return player === this.player1 ? document.querySelector("section.player-1") : document.querySelector("section.player-2")
+    }
 }
 
 export default new GameState();

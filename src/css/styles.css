@@ -23,11 +23,11 @@ section.board {
     }
 
     .cell[data-value="ship"].hit {
-        background-color: red;
+        background-color: red !important;
     }
 
     .cell[data-value="ship"].sunk {
-        background-color: red;
+        background-color: red !important;
         border-style: solid;
         border-color: black;
         border-width: 5px;

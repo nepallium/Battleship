@@ -45,3 +45,12 @@ export function styleSunkenShip(shipCell) {
         cell.classList.add("sunk")
     }
 }
+
+export function getDivFromCoord(coord, player) {
+    const playerSectionElement = gameState.getElementFromPlayer(player)
+
+    const selectedDiv = playerSectionElement.querySelector(`div.cell[data-position="${JSON.stringify(coord)}"]`)
+
+    console.log(selectedDiv)
+    return selectedDiv
+}
