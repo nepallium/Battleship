@@ -37,7 +37,11 @@ section.board {
 /* COMPUTER */
 section.board.player-1 {
     .cell:hover {
-        cursor: pointer;
+        cursor: crosshair;
+    }
+    
+    &.disabled .cell:hover {
+        cursor: default;
     }
 }
 

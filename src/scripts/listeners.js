@@ -31,9 +31,11 @@ function handleAttackClick(div, player) {
 function disableBoard() {
     const player1Section = document.querySelector("section.player-1");
     player1Section.style.pointerEvents = "none";
+    player1Section.classList.add("disabled");
 }
 
 function enableBoard() {
     const player1Section = document.querySelector("section.player-1");
     player1Section.style.pointerEvents = "auto";
+    player1Section.classList.remove("disabled");
 }
