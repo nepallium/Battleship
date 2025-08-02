@@ -1,7 +1,6 @@
-import { processAttack } from "./gameFunctions";
-import { getDivFromCoord } from "./domStuff";
+import { checkWin, processAttack } from "./gameFunctions";
+import { getDivFromCoord, enableBoard, endGame } from "./domStuff";
 import gameState from "./gameState";
-import { enableBoard } from "./listeners";
 
 // use user's board copy to know which coordinates to select from
 const coords = (function generateCoordsArr() {
@@ -20,26 +19,37 @@ let adjCoords = [];
 let hitShipCoords = [];
 export function computerMakeMove() {
     const size = coords.length;
-    
-    
-    // debugger; // This will pause execution when DevTools is open
-    
-    
-    let idx, selectedCoord;
-    if (adjCoords.length > 0) {
-        idx = Math.floor(Math.random() * adjCoords.length);
-        selectedCoord = adjCoords.splice(idx, 1)[0];
-        coords.splice(coords.indexOf(selectedCoord), 1);
-    } else {
-        idx = Math.floor(Math.random() * size);
-        selectedCoord = coords.splice(idx, 1)[0];
+
+    let selectedCoord;
+    let validCoordFound = false;
+
+    while (!validCoordFound) {
+        if (adjCoords.length > 0) {
+            const idx = Math.floor(Math.random() * adjCoords.length);
+            selectedCoord = adjCoords.splice(idx, 1)[0];
+
+            // Check if this coordinate still exists in coords array
+            const coordIndex = coords.findIndex(
+                (coord) =>
+                    coord[0] === selectedCoord[0] &&
+                    coord[1] === selectedCoord[1]
+            );
+
+            if (coordIndex !== -1) {
+                coords.splice(coordIndex, 1);
+                validCoordFound = true;
+            }
+            // If not found, continue loop to try another coordinate
+        } else {
+            const idx = Math.floor(Math.random() * size);
+            selectedCoord = coords.splice(idx, 1)[0];
+            validCoordFound = true;
+        }
     }
 
     const selectedDiv = getDivFromCoord(selectedCoord);
 
     processAttack(selectedDiv, gameState.player2);
-
-    // debugger; // This will pause execution when DevTools is open
 
     if (selectedDiv.classList.contains("hit")) {
         hitShipCoords.push(selectedCoord);
@@ -53,16 +63,22 @@ export function computerMakeMove() {
         // Continue attacking adjacent cells after delay
         setTimeout(() => {
             computerMakeMove();
-        }, 500);
+        }, 50);
         return; // Exit current function to allow delay
     } else if (selectedDiv.classList.contains("sunk")) {
         // clear adjCoords
         adjCoords = [];
         hitShipCoords = [];
 
+        // Check if computer won
+        if (checkWin(gameState.player1)) {
+            return;
+        }
+        
+        // Continue playing - game ending is handled in processAttack
         setTimeout(() => {
             computerMakeMove();
-        }, 500);
+        }, 50);
     } else {
         // Computer missed - switch back to user's turn
         gameState.switchTurn();
@@ -96,7 +112,7 @@ function findAdjCoords() {
 function findAdjEdgeCoords() {
     adjCoords = [];
 
-    hitShipCoords.sort(sortCoordArray)
+    hitShipCoords.sort(sortCoordArray);
 
     const head = hitShipCoords[0];
     const tail = hitShipCoords.at(-1);
@@ -108,14 +124,10 @@ function findAdjEdgeCoords() {
         let maxCol = col2 + 1;
 
         if (minCol >= 0) {
-            if (coordExists(row1, minCol)) {
-                adjCoords.push([row1, minCol]);
-            }
+            adjCoords.push([row1, minCol]);
         }
         if (maxCol <= 9) {
-            if (coordExists(row1, maxCol)) {
-                adjCoords.push([row1, maxCol]);
-            }
+            adjCoords.push([row1, maxCol]);
         }
     }
     // vertical ship
@@ -124,14 +136,10 @@ function findAdjEdgeCoords() {
         let maxRow = row2 + 1;
 
         if (minRow >= 0) {
-            if (coordExists(minRow, col1)) {
-                adjCoords.push([minRow, col1]);
-            }
+            adjCoords.push([minRow, col1]);
         }
         if (maxRow <= 9) {
-            if (coordExists(maxRow, col1)) {
-                adjCoords.push([maxRow, col1]);
-            }
+            adjCoords.push([maxRow, col1]);
         }
     }
 }
@@ -144,5 +152,5 @@ function sortCoordArray(coord1, coord2) {
     }
 }
 function coordExists(row, col) {
-    return coords.some(coord => coord[0] === row && coord[1] === col);
+    return coords.some((coord) => coord[0] === row && coord[1] === col);
 }

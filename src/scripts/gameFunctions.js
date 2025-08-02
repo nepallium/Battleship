@@ -1,5 +1,5 @@
 import Player from "./classes/Player";
-import { loadBoard } from "./domStuff";
+import { loadBoard, endGame } from "./domStuff";
 import gameState from "./gameState";
 import { styleSunkenShip } from "./domStuff";
 import Ship from "./classes/Ship";
@@ -37,4 +37,20 @@ export function processAttack(cell, attackedPlayer) {
             cell.classList.add("hit");
         }
     }
+
+    if (attackedPlayer.gameboard.isGameOver()) {
+        // Determine the winner (the attacker, not the attacked player)
+        const winner = attackedPlayer === gameState.player1 ? gameState.player2 : gameState.player1;
+        endGame(winner);
+    }
+}
+
+export function checkWin(winningPlayer) {
+    const loser = winningPlayer === gameState.player1 ? gameState.player2 : gameState.player1
+
+    if (loser.gameboard.isGameOver()) {
+        return true
+    }
+
+    return false
 }

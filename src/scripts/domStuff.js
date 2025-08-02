@@ -55,3 +55,21 @@ export function getDivFromCoord(coord, player) {
     console.log(selectedDiv);
     return selectedDiv;
 }
+
+export function disableBoard(player) {
+    const playerSection = gameState.getElementFromPlayer(player);
+    playerSection.classList.add("disabled");
+}
+
+export function enableBoard() {
+    const player1Section = document.querySelector("section.player-1");
+    player1Section.classList.remove("disabled");
+}
+
+export function endGame(winner) {
+    const winningPlayer = winner === gameState.player2 ? "User" : "Computer"
+
+    disableBoard(gameState.player1)
+    disableBoard(gameState.player2)
+    console.log(`GGs! ${winningPlayer} won!`)
+}

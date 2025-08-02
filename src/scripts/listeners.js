@@ -1,6 +1,6 @@
 import { computerMakeMove } from "./computerPlayer";
-import { loadBoard, styleSunkenShip } from "./domStuff";
-import { processAttack } from "./gameFunctions";
+import { loadBoard, styleSunkenShip, disableBoard, endGame } from "./domStuff";
+import { checkWin, processAttack } from "./gameFunctions";
 import gameState from "./gameState";
 
 export function listenForAttack(div) {
@@ -22,28 +22,22 @@ function handleAttackClick(div, player) {
     div.style.pointerEvents = "none";
     processAttack(div, player);
 
-    // Check if the attack was successful
-    if (!(div.classList.contains("hit") || div.classList.contains("sunk"))) {
+    // If user sinks
+    if (div.classList.contains("sunk")) {
+        // Continue playing
+    }
+    // Else if attack was a miss, keep playing
+    else if (!div.classList.contains("hit")) {
         // User missed - switch to computer's turn
         gameState.switchTurn();
         gameState.setComputerThinking(true);
         
         // Disable the entire board to prevent further clicks
-        disableBoard();
+        disableBoard(player);
 
         // Computer makes moves
         setTimeout(() => {
             computerMakeMove();
-        }, 500);
+        }, 50);
     }
-}
-
-function disableBoard() {
-    const player1Section = document.querySelector("section.player-1");
-    player1Section.classList.add("disabled");
-}
-
-export function enableBoard() {
-    const player1Section = document.querySelector("section.player-1");
-    player1Section.classList.remove("disabled");
 }
