@@ -14,28 +14,36 @@ export function listenForAttack(div) {
 }
 
 function handleAttackClick(div, player) {
+    // Only allow attacks during user's turn
+    if (!gameState.isUserTurn()) {
+        return;
+    }
+
     div.style.pointerEvents = "none";
     processAttack(div, player);
 
-    // Disable the entire board section to prevent further clicks
-    disableBoard();
+    // Check if the attack was successful
+    if (!(div.classList.contains("hit") || div.classList.contains("sunk"))) {
+        // User missed - switch to computer's turn
+        gameState.switchTurn();
+        gameState.setComputerThinking(true);
+        
+        // Disable the entire board to prevent further clicks
+        disableBoard();
 
-    // computer makes moves
-    setTimeout(() => {
-        computerMakeMove();
-        // Re-enable the board after computer move completes
-        enableBoard();
-    }, 250);
+        // Computer makes moves
+        setTimeout(() => {
+            computerMakeMove();
+        }, 500);
+    }
 }
 
 function disableBoard() {
     const player1Section = document.querySelector("section.player-1");
-    player1Section.style.pointerEvents = "none";
     player1Section.classList.add("disabled");
 }
 
-function enableBoard() {
+export function enableBoard() {
     const player1Section = document.querySelector("section.player-1");
-    player1Section.style.pointerEvents = "auto";
     player1Section.classList.remove("disabled");
 }

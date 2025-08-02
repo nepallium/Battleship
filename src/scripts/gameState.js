@@ -4,7 +4,8 @@ class GameState {
     constructor() {
         this.player1 = new Player(); // computer's board
         this.player2 = new Player(); // user's board
-        this.currPlayer 
+        this.currentTurn = 'user'; // 'user' or 'computer'
+        this.isComputerThinking = false; // prevents user clicks during computer turn
     }
 
     getPlayerFromElement(playerSectionElement) {
@@ -13,6 +14,22 @@ class GameState {
 
     getElementFromPlayer(player) {
         return player === this.player1 ? document.querySelector("section.player-1") : document.querySelector("section.player-2")
+    }
+
+    switchTurn() {
+        this.currentTurn = this.currentTurn === 'user' ? 'computer' : 'user';
+    }
+
+    isUserTurn() {
+        return this.currentTurn === 'user' && !this.isComputerThinking;
+    }
+
+    isComputerTurn() {
+        return this.currentTurn === 'computer' || this.isComputerThinking;
+    }
+
+    setComputerThinking(thinking) {
+        this.isComputerThinking = thinking;
     }
 }
 
