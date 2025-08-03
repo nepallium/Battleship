@@ -1,6 +1,5 @@
 import gameState from "./gameState";
 import Ship from "./classes/Ship";
-import { listenForAttack } from "./userPlayer";
 
 export function loadBoard(playerSectionElement) {
     playerSectionElement.innerHTML = "";
@@ -70,7 +69,7 @@ export function endGame(winner) {
     console.log(`GGs! ${winningPlayer} won!`)
 }
 
-export function displayNextShipToPlace(shipObj) {
+export function displayShipToPlace(shipObj, direction) {
     const containerElement = document.querySelector(".ship-to-place")
     const nameElement = containerElement.querySelector(".ship-name")
     const shipContainer = containerElement.querySelector(".ship")
@@ -85,16 +84,17 @@ export function displayNextShipToPlace(shipObj) {
         shipContainer.appendChild(cell)
     }
 
-    shipContainer.style.gridTemplateColumns = `repeat(${shipObj.length}, 1fr)`
+    shipContainer.style = ""
+    if (direction === "horizontal") {
+        shipContainer.style.gridTemplateColumns = `repeat(${shipObj.length}, 1fr)`
+    } else if (direction === "vertical") {
+        shipContainer.style.gridTemplateRows = `repeat(${shipObj.length}, 1fr)`
+    }
     
     shipContainer.dataset.shipName = shipObj.name
 }
 
 export function canStartGame() {
     const containerElement = document.querySelector(".ship-to-place")
-    const nameElement = containerElement.querySelector(".ship-name")
-    const shipContainer = containerElement.querySelector(".ship")
-
-    nameElement.innerHTML = ""
-    shipContainer.innerHTML = ""
+    containerElement.style.display = "none"
 }

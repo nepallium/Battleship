@@ -1,9 +1,9 @@
 import Player from "./classes/Player";
-import { loadBoard, endGame, displayNextShipToPlace } from "./domStuff";
+import { loadBoard, endGame } from "./domStuff";
 import gameState from "./gameState";
 import { styleSunkenShip } from "./domStuff";
 import Ship from "./classes/Ship";
-import { resetShipPlacer } from "./userPlayer";
+import { resetShipPlacer } from "./shipDragAndDrop";
 
 export function resetGame() {
     // reset gameState

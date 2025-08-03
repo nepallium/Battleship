@@ -4,7 +4,7 @@ import "../css/styles.css"
 import Player from "./classes/Player";
 import Gameboard from "./classes/Gameboard";
 import Ship from "./classes/Ship";
-import { displayNextShipToPlace, loadBoard } from "./domStuff";
+import { displayShipToPlace, loadBoard } from "./domStuff";
 import {resetGame} from "./gameFunctions";
 import gameState from "./gameState";
 import { initializeListeners } from "./userPlayer";
@@ -39,17 +39,11 @@ function setupGame() {
     
     // Set current player to player 2 (user goes first)
     gameState.currPlayer = gameState.player2;
-
-    // reload boards
-    loadBoard(document.querySelector("section.player-1"))
 }
 
 // Initialize the game
 document.addEventListener('DOMContentLoaded', () => {
     setupGame();
-    
-    let shipsToPlace = gameState.player2.gameboard.shipsList
-    displayNextShipToPlace(shipsToPlace[0])
 
     initializeListeners();
 });

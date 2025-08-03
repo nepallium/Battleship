@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battleship</title>
-</head>
-<body>
-    <header></header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=replay"
+        />
+        <title>Battleship</title>
+    </head>
+    <body>
+        <header></header>
 
-    <main>
-        <section class="player-1 board">
-        </section>
-        <section class="player-2 board">
-        </section>
-        <section class="setup player-2">
-            <div class="options player-2">
-                <button class="randomize">Random</button>
-                <button class="reset">Reset</button>
-            </div>
-            <div class="ship-to-place">
-                <p class="ship-name"></p>
-                <div class="ship" draggable="true"></div>
-            </div>
-        </section>
-    </main>
-</body>
+        <main>
+            <section class="player-1 board"></section>
+            <section class="player-2 board"></section>
+            <section class="setup player-2">
+                <div class="options player-2">
+                    <button class="randomize">Random</button>
+                    <button class="reset">Reset</button>
+                </div>
+                <div class="ship-to-place">
+                    <p class="ship-name"></p>
+                    <span class="material-symbols-outlined replay"> replay </span>
+                    <div class="ship" draggable="true"></div>
+                </div>
+            </section>
+        </main>
+    </body>
 </html>
