@@ -164,6 +164,10 @@ export default class Gameboard {
         }
     }
 
+    resetBoard() {
+        this.board = this.#initBoard()
+    }
+
     removeOuterCells(remainingCoords, ship, head, direction) {
         const [headRow, headCol] = head;
         let tailRow, tailCol;

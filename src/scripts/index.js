@@ -7,7 +7,7 @@ import Ship from "./classes/Ship";
 import { loadBoard } from "./domStuff";
 import {resetGame} from "./gameFunctions";
 import gameState from "./gameState";
-import { listenForRandomize } from "./listeners";
+import { listenForRandomize, listenForReset } from "./listeners";
 
 // Set up the game with predetermined ship coordinates
 function setupGame() {
@@ -71,3 +71,4 @@ function setupGame() {
 // Initialize the game
 setupGame();
 listenForRandomize()
+listenForReset()

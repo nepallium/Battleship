@@ -55,6 +55,7 @@ export function listenForReset() {
     const resetBtn = document.querySelector(".options .reset")
 
     resetBtn.addEventListener("click", () => {
-        
+        gameState.player2.gameboard.resetBoard()
+        loadBoard(gameState.getElementFromPlayer(gameState.player2))
     })
 }
