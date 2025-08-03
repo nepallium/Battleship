@@ -41,3 +41,20 @@ function handleAttackClick(div, player) {
         }, 50);
     }
 }
+
+export function listenForRandomize() {
+    const randomizeBtn = document.querySelector(".options .randomize");
+
+    randomizeBtn.addEventListener("click", () => {
+        gameState.player2.gameboard.randomizeBoard();
+        loadBoard(gameState.getElementFromPlayer(gameState.player2))
+    });
+}
+
+export function listenForReset() {
+    const resetBtn = document.querySelector(".options .reset")
+
+    resetBtn.addEventListener("click", () => {
+        
+    })
+}

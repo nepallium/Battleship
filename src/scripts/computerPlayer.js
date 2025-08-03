@@ -151,6 +151,3 @@ function sortCoordArray(coord1, coord2) {
         return coord1[0] - coord2[0];
     }
 }
-function coordExists(row, col) {
-    return coords.some((coord) => coord[0] === row && coord[1] === col);
-}
