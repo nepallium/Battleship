@@ -1,8 +1,9 @@
 import Player from "./classes/Player";
-import { loadBoard, endGame } from "./domStuff";
+import { loadBoard, endGame, displayNextShipToPlace } from "./domStuff";
 import gameState from "./gameState";
 import { styleSunkenShip } from "./domStuff";
 import Ship from "./classes/Ship";
+import { resetShipPlacer } from "./userPlayer";
 
 export function resetGame() {
     // reset gameState
@@ -15,6 +16,8 @@ export function resetGame() {
 
     loadBoard(player1Element);
     loadBoard(player2Element);
+
+    resetShipPlacer()
 }
 
 export function processAttack(cell, attackedPlayer) {

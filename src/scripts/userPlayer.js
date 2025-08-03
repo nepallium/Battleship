@@ -1,5 +1,5 @@
 import { computerMakeMove } from "./computerPlayer";
-import { loadBoard, styleSunkenShip, disableBoard, endGame } from "./domStuff";
+import { loadBoard, styleSunkenShip, disableBoard, endGame, displayNextShipToPlace, canStartGame } from "./domStuff";
 import { checkWin, processAttack } from "./gameFunctions";
 import gameState from "./gameState";
 
@@ -60,6 +60,7 @@ function listenForRandomize() {
     randomizeBtn.addEventListener("click", () => {
         gameState.player2.gameboard.randomizeBoard();
         loadBoard(gameState.getElementFromPlayer(gameState.player2));
+        canStartGame()
     });
 }
 
@@ -69,20 +70,17 @@ function listenForReset() {
     resetBtn.addEventListener("click", () => {
         gameState.player2.gameboard.resetBoard();
         loadBoard(gameState.getElementFromPlayer(gameState.player2));
+        resetShipPlacer()
     });
 }
 
 function listenForShipDragAndDrop() {
     const shipElement = document.querySelector(".ship-to-place .ship");
-    const shipCells = shipElement.childNodes;
 
     let dragCellIdx
-    shipCells.forEach((shipCell) => {
-        shipCell.addEventListener("mousedown", () => {
-            dragCellIdx = shipCell.dataset.index
-            console.log(dragCellIdx)
-        });
-    });
+    shipElement.addEventListener("mousedown", (e) => {
+        dragCellIdx = e.target.dataset.index
+    })
 
     
     // Listen for drop
@@ -96,22 +94,39 @@ function listenForShipDragAndDrop() {
             
             // Get head coord
             const cellCoords = JSON.parse(cellDiv.dataset.position)
-            if (true) { //assume horizontal
+            if (true) { // assume horizontal
                 head = [cellCoords[0], cellCoords[1] - dragCellIdx]
             }
         }
     });
 
-    // Get correct ship object
-    const ship = userPlayer.gameboard.shipsList.find(
-        (shipFromList) => shipFromList.name === shipElement.dataset.shipName
-    );
-
+    
     userBoardElement.addEventListener("drop", (e) => {
+        // Get correct ship object
+        const ship = userPlayer.gameboard.shipsList.find(
+            (shipFromList) => shipFromList.name === shipElement.dataset.shipName
+        );
+        let shipIdx = userPlayer.gameboard.shipsList.indexOf(ship)
+
         const cellDiv = e.target
         if (cellDiv.classList.contains("cell")) {
+            if (dragCellIdx == undefined) {
+                return
+            }
+
             userPlayer.gameboard.addShip(ship, head, "horizontal");
             loadBoard(userBoardElement);
+            
+            if (++shipIdx === userPlayer.gameboard.shipsList.length) {
+                canStartGame()
+            } else {
+                displayNextShipToPlace(userPlayer.gameboard.shipsList[shipIdx])
+            }
         }
     });
+}
+
+export function resetShipPlacer() {
+    let shipsToPlace = gameState.player2.gameboard.shipsList
+    displayNextShipToPlace(shipsToPlace[0])
 }

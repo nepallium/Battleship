@@ -89,3 +89,12 @@ export function displayNextShipToPlace(shipObj) {
     
     shipContainer.dataset.shipName = shipObj.name
 }
+
+export function canStartGame() {
+    const containerElement = document.querySelector(".ship-to-place")
+    const nameElement = containerElement.querySelector(".ship-name")
+    const shipContainer = containerElement.querySelector(".ship")
+
+    nameElement.innerHTML = ""
+    shipContainer.innerHTML = ""
+}
