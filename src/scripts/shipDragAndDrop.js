@@ -1,12 +1,10 @@
 import {
     loadBoard,
-    styleSunkenShip,
-    disableBoard,
-    endGame,
     displayShipToPlace,
     canStartGame,
+    styleNoDropCells,
+    unstyleNoDropCells,
 } from "./domStuff";
-import { checkWin, processAttack } from "./gameFunctions";
 import gameState from "./gameState";
 
 let direction = "horizontal"; // default to horizontal
@@ -34,9 +32,9 @@ export function listenForReset() {
 export function resetShipPlacer() {
     let shipsToPlace = gameState.player2.gameboard.shipsList;
     direction = "horizontal";
-    
-    const containerElement = document.querySelector(".ship-to-place")
-    containerElement.style.display = "inline-block"
+
+    const containerElement = document.querySelector(".ship-to-place");
+    containerElement.style.display = "inline-block";
 
     displayShipToPlace(shipsToPlace[0], direction);
 }
@@ -47,6 +45,19 @@ export function listenForShipDragAndDrop() {
     let dragCellIdx;
     shipElement.addEventListener("mousedown", (e) => {
         dragCellIdx = e.target.dataset.index;
+    });
+
+    // styling no-drop cells logic
+    let isDragging = false;
+    shipElement.addEventListener("drag", () => {
+        isDragging = true;
+        styleNoDropCells();
+    });
+    shipElement.addEventListener("dragend", () => {
+        if (isDragging) {
+            isDragging = false;
+            unstyleNoDropCells();
+        }
     });
 
     // Listen for drop
@@ -82,8 +93,13 @@ export function listenForShipDragAndDrop() {
                 head = [cellCoords[0] - dragCellIdx, cellCoords[1]];
             }
 
-            userPlayer.gameboard.addShip(ship, head, direction);
-            loadBoard(userBoardElement);
+            if (userPlayer.gameboard.canPlaceShip(ship, head, direction)) {
+                userPlayer.gameboard.addShip(ship, head, direction);
+                userPlayer.gameboard.setAdjacentCells(head, ship.length, direction)
+                loadBoard(userBoardElement);
+            } else {
+                return;
+            }
 
             if (++shipIdx === userPlayer.gameboard.shipsList.length) {
                 canStartGame();
@@ -117,9 +133,13 @@ export function listenForRotate() {
     });
 
     // disable double click selection
-    rotateBtn.addEventListener("mousedown", (e) => {
-        if (e.detail > 1) {
-            e.preventDefault()
-        }
-    }, false)
+    rotateBtn.addEventListener(
+        "mousedown",
+        (e) => {
+            if (e.detail > 1) {
+                e.preventDefault();
+            }
+        },
+        false
+    );
 }

@@ -1,13 +1,6 @@
 import { computerMakeMove } from "./computerPlayer";
-import {
-    loadBoard,
-    styleSunkenShip,
-    disableBoard,
-    endGame,
-    displayShipToPlace,
-    canStartGame,
-} from "./domStuff";
-import { checkWin, processAttack } from "./gameFunctions";
+import { disableBoard } from "./domStuff";
+import { processAttack } from "./gameFunctions";
 import gameState from "./gameState";
 import {
     listenForRandomize,
@@ -49,11 +42,11 @@ function handleAttackClick(div, player) {
     processAttack(div, player);
 
     // If user sinks
-    if (div.classList.contains("sunk")) {
+    if (div.classList.contains("sunk")  || div.classList.contains("hit")) {
         // Continue playing
     }
     // Else if attack was a miss, keep playing
-    else if (!div.classList.contains("hit")) {
+    else {
         // User missed - switch to computer's turn
         gameState.switchTurn();
         gameState.setComputerThinking(true);

@@ -6,6 +6,7 @@ export default class Gameboard {
         this.boatAmt = 5;
         this.board = this.#initBoard();
         this.boatsHitCtr = 0;
+        this.adjacentCells = new Set(); // Track adjacent cells as "no-drop" zones
         this.shipsList = [
             new Ship(5, "Carrier"),
             new Ship(4, "Battleship"),
@@ -25,6 +26,44 @@ export default class Gameboard {
         } else if (direction === "vertical") {
             for (let row = startRow; row < startRow + ship.length; row++) {
                 this.board[row][startCol] = ship;
+            }
+        }
+    }
+
+    // Mark cells adjacent to a ship as no-drop
+    setAdjacentCells(head, shipLength, direction) {
+        const [startRow, startCol] = head;
+        
+        for (let i = 0; i < shipLength; i++) {
+            let row, col;
+            
+            if (direction === "horizontal") {
+                row = startRow;
+                col = startCol + i;
+            } else {
+                row = startRow + i;
+                col = startCol;
+            }
+            
+            // Mark all 8 adjacent cells around each ship cell
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    const adjRow = row + dr;
+                    const adjCol = col + dc;
+                    
+                    // Skip if out of bounds
+                    if (adjRow < 0 || adjRow >= this.boardSize || 
+                        adjCol < 0 || adjCol >= this.boardSize) {
+                        continue;
+                    }
+                    
+                    // Skip if it's the ship itself
+                    if (adjRow === row && adjCol === col) {
+                        continue;
+                    }
+                    
+                    this.adjacentCells.add(`${adjRow},${adjCol}`);
+                }
             }
         }
     }
@@ -56,32 +95,9 @@ export default class Gameboard {
                 return false;
             }
 
-            // Check adjacent cells for ships (including diagonals)
-            for (let dr = -1; dr <= 1; dr++) {
-                for (let dc = -1; dc <= 1; dc++) {
-                    const adjRow = row + dr;
-                    const adjCol = col + dc;
-
-                    // Skip if adjacent position is out of bounds
-                    if (
-                        adjRow < 0 ||
-                        adjRow >= this.boardSize ||
-                        adjCol < 0 ||
-                        adjCol >= this.boardSize
-                    ) {
-                        continue;
-                    }
-
-                    // Skip if it's the current ship's position
-                    if (adjRow === row && adjCol === col) {
-                        continue;
-                    }
-
-                    // Check if adjacent cell has a ship
-                    if (this.board[adjRow][adjCol] instanceof Ship) {
-                        return false;
-                    }
-                }
+            // Check if the cell itself has a ship or is adjacent to an existing ship
+            if (this.board[row][col] instanceof Ship || this.adjacentCells.has(`${row},${col}`)) {
+                return false;
             }
         }
 
@@ -118,6 +134,7 @@ export default class Gameboard {
         // Reset the board first
         this.board = this.#initBoard();
         this.boatsHitCtr = 0;
+        this.adjacentCells.clear(); // Clear adjacent cells for a new randomization
 
         let remainingCoords = (function generateCoordsArr() {
             let coords = [];
@@ -153,6 +170,7 @@ export default class Gameboard {
                 const idx = Math.floor(Math.random() * validHeads.length);
                 const head = validHeads[idx];
                 this.addShip(ship, head, direction);
+                this.setAdjacentCells(head, ship.length, direction)
                 placed = true;
             }
 
@@ -164,48 +182,7 @@ export default class Gameboard {
     }
 
     resetBoard() {
-        this.board = this.#initBoard()
-    }
-
-    removeOuterCells(remainingCoords, ship, head, direction) {
-        const [headRow, headCol] = head;
-        let tailRow, tailCol;
-        if (direction === "horizontal") {
-            tailRow = headRow;
-            tailCol += ship.length;
-        } else if (direction === "vertical") {
-            tailCol = headCol;
-            tailRow += ship.length;
-        }
-        let topLeft = [headRow - 1, headCol - 1];
-        let bottomLeft = [tailRow + 1, tailCol - 1];
-        let topRight = [headRow - 1, headCol + 1];
-        let bottomRight = [tailRow + 1, tailCol + 1];
-
-        const extremums = [topLeft, bottomLeft, topRight, bottomRight];
-
-        extremums.map((coord) => {
-            let [newX, newY] = coord;
-            if (coord[0] < 0) {
-                newX = 0;
-            } else if (coord[0] > 9) {
-                newX = 9;
-            }
-            if (coord[1] < 0) {
-                newY = 0;
-            } else if (coord[1] > 9) {
-                newY = 9;
-            }
-            return [newX, newY];
-        })[(topLeft, bottomLeft, topRight, bottomRight)] = extremums;
-
-        for (let row = topLeft[0]; row <= bottomLeft[0]; row++) {
-            remainingCoords.splice(
-                remainingCoords.findIndex(
-                    (coord) => coord[0] === row && coord[1] === topLeft[1]
-                ),
-                topRight[1] - topLeft[1]
-            );
-        }
+        this.board = this.#initBoard();
+        this.adjacentCells.clear(); // Clear adjacent cells on reset
     }
 }

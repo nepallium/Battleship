@@ -1,5 +1,7 @@
 body {
     font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
 main {
@@ -59,6 +61,14 @@ section.board.player-2 {
     .cell[data-value="ship"] {
         background-color: blue;
     }
+
+    .cell.active-no-drop:not([data-value="ship"]) {
+        background-color: lightcoral;
+        pointer-events: auto;
+    }
+    .cell.active-no-drop:hover {
+        cursor: not-allowed;
+    }
 }
 
 section.setup {
@@ -83,7 +93,7 @@ div.ship-to-place {
     }
     .cell:hover {
         background-color: rgb(0, 129, 129);
-        cursor: pointer;
+        cursor: move;
     }
 
     span {
