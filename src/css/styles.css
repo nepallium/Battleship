@@ -3,8 +3,10 @@ body {
 }
 
 main {
-    display: flex;
-    gap: 5rem;
+    display: grid;
+    width: max-content;
+    grid-template: 1fr max-content / 1fr 1fr;
+    gap: 1rem;
 }
 
 section.board {
@@ -56,5 +58,30 @@ section.board.player-1 {
 section.board.player-2 {
     .cell[data-value="ship"] {
         background-color: blue;
+    }
+}
+
+section.setup {
+    grid-column: 2;
+}
+
+div.ship-to-place {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .ship {
+        /* num of columns determined in JS */
+        display: grid;
+        gap: 0.5rem;
+    }
+
+    .cell {
+        height: 2rem;
+        width: 2rem;
+        background-color: aqua;
+    }
+    .cell:hover {
+        background-color: rgb(0, 129, 129);
     }
 }

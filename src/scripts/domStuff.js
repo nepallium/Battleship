@@ -1,6 +1,6 @@
 import gameState from "./gameState";
 import Ship from "./classes/Ship";
-import { listenForAttack } from "./listeners";
+import { listenForAttack } from "./userPlayer";
 
 export function loadBoard(playerSectionElement) {
     playerSectionElement.innerHTML = "";
@@ -17,12 +17,8 @@ export function loadBoard(playerSectionElement) {
 
             playerSectionElement.appendChild(cell);
 
-            // only listen for clicks if board is computer's
-            if (player === gameState.player1) {
-                listenForAttack(cell);
-            }
             // only display ships on user's own board
-            else {
+            if (player === gameState.player2) {
                 if (cellVal instanceof Ship) {
                     const ship = cellVal;
                     cell.dataset.value = "ship";
@@ -72,4 +68,24 @@ export function endGame(winner) {
     disableBoard(gameState.player1)
     disableBoard(gameState.player2)
     console.log(`GGs! ${winningPlayer} won!`)
+}
+
+export function displayNextShipToPlace(shipObj) {
+    const containerElement = document.querySelector(".ship-to-place")
+    const nameElement = containerElement.querySelector(".ship-name")
+    const shipContainer = containerElement.querySelector(".ship")
+
+    nameElement.textContent = shipObj.name
+    shipContainer.innerHTML = ""
+
+    for (let i = 0; i < shipObj.length; i++) {
+        const cell = document.createElement("div")
+        cell.classList.add("cell")
+        cell.dataset.index = i
+        shipContainer.appendChild(cell)
+    }
+
+    shipContainer.style.gridTemplateColumns = `repeat(${shipObj.length}, 1fr)`
+    
+    shipContainer.dataset.shipName = shipObj.name
 }

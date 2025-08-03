@@ -6,6 +6,13 @@ export default class Gameboard {
         this.boatAmt = 5;
         this.board = this.#initBoard();
         this.boatsHitCtr = 0;
+        this.shipsList = [
+            new Ship(5, "Carrier"),
+            new Ship(4, "Battleship"),
+            new Ship(3, "Cruiser"),
+            new Ship(3, "Submarine"),
+            new Ship(2, "Destroyer"),
+        ];
     }
 
     addShip(ship, head, direction) {
@@ -124,15 +131,7 @@ export default class Gameboard {
             return coords;
         })();
 
-        let shipsToPlace = [
-            new Ship(5, "Carrier"),
-            new Ship(4, "Battleship"),
-            new Ship(3, "Cruiser"),
-            new Ship(3, "Submarine"),
-            new Ship(2, "Destroyer"),
-        ];
-
-        for (const ship of shipsToPlace) {
+        for (const ship of this.shipsList) {
             let placed = false;
 
             let attempts = 0;
