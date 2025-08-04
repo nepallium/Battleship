@@ -1,3 +1,7 @@
+:root {
+    --cell-width: 2rem;
+}
+
 body {
     font-family: "Inter", sans-serif;
     display: flex;
@@ -24,28 +28,61 @@ main {
 
 section.board {
     display: grid;
-    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
-    gap: 0.5rem;
+    grid-template: repeat(10, 2rem) / repeat(10, 2rem);
+    border: 2px solid black;
 
+    --border-hit-red: rgb(251, 94, 94);
+    
     .cell {
-        background-color: gray;
+        position: relative;
+        border: 0.5px solid black;
         width: 2rem;
         height: 2rem;
+        background-color: white;
     }
 
     .cell[data-value="1"] {
-        background-color: yellow;
+        /* background-color: yellow; */
+    }
+    .cell[data-value="1"]::before {
+        content: "";
+        background-color: gray;
+        width: calc(var(--cell-width) /4);
+        height: calc(var(--cell-width) /4);
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
-    .cell[data-value="ship"].hit {
-        background-color: red !important;
+    .cell[data-value="ship"].hit,
+    .cell[data-value="ship"].sunk {
+        /* outline-style: solid; */
+        /* outline-width: 3px; */
+        /* outline-offset: -1px; */
+        /* border-width: 3px;
+        border-color: var(--border-hit-red) !important; */
+        color: var(--border-hit-red);
+        box-shadow: inset 0 0 0 3px var(--border-hit-red);
+        color: var(--border-hit-red);
+    }
+
+    .cell[data-value="ship"].hit::before,
+    .cell[data-value="ship"].sunk::before {
+        content: '\00D7';
+        font-size: 1.8rem;
+        font-weight: 500;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1;
     }
 
     .cell[data-value="ship"].sunk {
-        background-color: red !important;
-        border-style: solid;
-        border-color: black;
-        border-width: 5px;
+        color: rgb(255, 229, 229) !important;
+        background-color: rgb(255, 154, 154);
     }
 
     &.disabled {
@@ -94,13 +131,16 @@ div.ship-to-place {
     .ship {
         /* num of columns determined in JS */
         display: grid;
-        gap: 0.5rem;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
     }
 
     .cell {
         height: 2rem;
         width: 2rem;
         background-color: aqua;
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
     }
     .cell:hover {
         background-color: rgb(0, 129, 129);

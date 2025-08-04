@@ -20,6 +20,11 @@ export function loadBoard(playerSectionElement) {
             }
         }
     }
+    
+    // Remove borders between ship cells
+    if (player === gameState.player2) {
+        removeShipCellBorders(playerSectionElement);
+    }
 }
 
 function modifyShipCell(user, cell) {
@@ -32,6 +37,7 @@ function modifyShipCell(user, cell) {
         cell.dataset.value = "ship";
         cell.dataset.shipName = ship.name;
         cell.classList.add("no-drop");
+        cell.classList.add("ship-cell");
     } else if (user.gameboard.adjacentCells.has(`${i},${j}`)) {
         cell.classList.add("no-drop");
     }
@@ -111,9 +117,9 @@ export function displayShipToPlace(shipObj, direction) {
 
     shipContainer.style = "";
     if (direction === "horizontal") {
-        shipContainer.style.gridTemplateColumns = `repeat(${shipObj.length}, 1fr)`;
+        shipContainer.style.gridTemplateColumns = `repeat(${shipObj.length}, 2rem)`;
     } else if (direction === "vertical") {
-        shipContainer.style.gridTemplateRows = `repeat(${shipObj.length}, 1fr)`;
+        shipContainer.style.gridTemplateRows = `repeat(${shipObj.length}, 2rem)`;
     }
 
     shipContainer.dataset.shipName = shipObj.name;
@@ -140,5 +146,36 @@ export function hideStartOptions() {
 }
 
 export function startGame() {
+    // Load the user's ships onto the main game board
+    const userBoard = document.querySelector("main section.player-2");
+    loadBoard(userBoard);
+    
     enableBoard()
+}
+
+function removeShipCellBorders(boardElement) {
+    const shipCells = boardElement.querySelectorAll('.ship-cell');
+    
+    shipCells.forEach(cell => {
+        const [row, col] = JSON.parse(cell.dataset.position);
+        const shipName = cell.dataset.shipName;
+        
+        // Check if there's a ship cell to the right
+        if (col < 9) {
+            const rightCell = boardElement.querySelector(`[data-position='[${row}, ${col + 1}]']`);
+            if (rightCell && rightCell.dataset.shipName === shipName) {
+                cell.style.borderRight = 'none';
+                rightCell.style.borderLeft = 'none';
+            }
+        }
+        
+        // Check if there's a ship cell below
+        if (row < 9) {
+            const belowCell = boardElement.querySelector(`[data-position='[${row + 1}, ${col}]']`);
+            if (belowCell && belowCell.dataset.shipName === shipName) {
+                cell.style.borderBottom = 'none';
+                belowCell.style.borderTop = 'none';
+            }
+        }
+    });
 }
