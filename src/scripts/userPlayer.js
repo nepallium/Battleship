@@ -3,19 +3,6 @@ import { disableBoard } from "./domStuff";
 import { processAttack } from "./gameFunctions";
 import gameState from "./gameState";
 
-// export function initializeListeners() {
-//     listenForRandomize();
-//     listenForReset();
-//     listenForShipDragAndDrop();
-//     listenForRotate();
-
-//     // listen for user clicks on computer's board
-//     const compBoardElement = gameState.getElementFromPlayer(gameState.player1);
-//     for (const cell of compBoardElement.childNodes) {
-//         listenForAttack(cell);
-//     }
-// }
-
 export function listenForAttack(div) {
     const playerSectionElement = div.parentElement;
 

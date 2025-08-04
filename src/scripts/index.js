@@ -46,10 +46,4 @@ document.addEventListener('DOMContentLoaded', () => {
     setupGame();
 
     initializeListeners();
-
-    // start button listener
-    const startBtn = document.querySelector(".start-game")
-    startBtn.addEventListener("click", () => {
-        startGame()
-    })
 });

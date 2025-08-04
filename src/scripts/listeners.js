@@ -1,5 +1,5 @@
 import { startGame } from "./domStuff";
-import { resetGame } from "./gameFunctions"
+import { resetGame } from "./gameFunctions";
 import gameState from "./gameState";
 import {
     listenForRandomize,
@@ -10,12 +10,12 @@ import {
 import { listenForAttack } from "./userPlayer";
 
 export function initializeListeners() {
+    // disableEscAndAutofocusDialog();
     listenForRandomize();
     listenForReset();
     listenForShipDragAndDrop();
     listenForRotate();
-    listenForStartGame()
-    listenForRestartGame()
+    listenForRestartGame();
 
     // listen for user clicks on computer's board
     const compBoardElement = gameState.getElementFromPlayer(gameState.player1);
@@ -24,18 +24,31 @@ export function initializeListeners() {
     }
 }
 
-function listenForStartGame() {
-    const startBtn = document.querySelector(".start-game")
+export function listenForStartGame() {
+    const modal = document.querySelector("dialog.start-game-modal");
+    const startBtn = document.querySelector(".start-game");
     startBtn.addEventListener("click", () => {
-        startGame()
-    })
+        modal.close();
+        startGame();
+    });
 }
 
 function listenForRestartGame() {
-    const modal = document.querySelector("dialog.end-game-modal")
-    const restartBtn = modal.querySelector(".restart-game")
+    const modal = document.querySelector("dialog.end-game-modal");
+    const restartBtn = modal.querySelector(".restart-game");
     restartBtn.addEventListener("click", () => {
-        modal.close()
-        resetGame()
-    })
+        modal.close();
+        resetGame();
+    });
+}
+
+function disableEscAndAutofocusDialog() {
+    const dialogs = document.querySelectorAll("dialog");
+    dialogs.forEach((dialog) =>
+        dialog.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+            }
+        })
+    );
 }

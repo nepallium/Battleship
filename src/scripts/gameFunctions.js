@@ -23,6 +23,11 @@ export function resetGame() {
     
     const shipPlacerOptionsElement = document.querySelector(".options.player-2")
     shipPlacerOptionsElement.style.display = "block"
+
+    // Show starting modal
+    const startDialog = document.querySelector("dialog.start-game-modal")
+    startDialog.showModal()
+    loadBoard(startDialog.querySelector("section.player-2"));
 }
 
 export function processAttack(cell, attackedPlayer) {

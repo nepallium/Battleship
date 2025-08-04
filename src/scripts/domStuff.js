@@ -1,5 +1,6 @@
 import gameState from "./gameState";
 import Ship from "./classes/Ship";
+import { listenForStartGame } from "./listeners";
 
 export function loadBoard(playerSectionElement) {
     playerSectionElement.innerHTML = "";
@@ -122,14 +123,17 @@ export function showStartOptions() {
     const containerElement = document.querySelector(".ship-to-place");
     containerElement.style.display = "none";
     
-    const msg = document.querySelector(".top > p")
+    const msg = document.querySelector("dialog.start-game-modal > p.instruction")
     msg.style.display = "none"
     const startBtn = document.querySelector(".start-game")
     startBtn.style.display = "block"
+    
+    // Add the start game listener when button becomes visible
+    listenForStartGame()
 }
 
 export function hideStartOptions() {
-    const msg = document.querySelector(".top > p")
+    const msg = document.querySelector("dialog.start-game-modal > p.instruction")
     msg.style.display = "block"
     const startBtn = document.querySelector(".start-game")
     startBtn.style.display = "none"
@@ -137,10 +141,4 @@ export function hideStartOptions() {
 
 export function startGame() {
     enableBoard()
-
-    const startBtn = document.querySelector(".start-game")
-    startBtn.style.display = "none"
-
-    const shipPlacerOptionsElement = document.querySelector(".options.player-2")
-    shipPlacerOptionsElement.style.display = "none"
 }

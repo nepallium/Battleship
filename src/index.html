@@ -22,12 +22,14 @@
             <h1>BATTLESHIP</h1>
         </header>
 
-        <section class="top">
-            <p>Place your ships on your board</p>
-            <button class="start-game" style="display: none">Start</button>
-        </section>
         <main>
             <section class="player-1 board disabled"></section>
+            <section class="player-2 board"></section>
+        </main>
+        
+        <dialog class="start-game-modal" closeby="none">
+            <p class="welcome">Welcome to Battleship</p>
+            <p class="instruction">Drag and drop your ships onto your board</p>
             <section class="player-2 board"></section>
             <section class="setup player-2">
                 <div class="options player-2">
@@ -41,8 +43,9 @@
                     </span>
                     <div class="ship" draggable="true"></div>
                 </div>
+                <button class="start-game">Start</button>
             </section>
-        </main>
+        </dialog>
 
         <dialog class="end-game-modal" closedby="none">
             <p></p>

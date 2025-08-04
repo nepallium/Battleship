@@ -9,13 +9,17 @@ import {
 import gameState from "./gameState";
 
 let direction = "horizontal"; // default to horizontal
+const getElementFromPlayer2 = () => {
+    const startDialog = document.querySelector("dialog.start-game-modal")
+    return startDialog.querySelector("section.player-2")
+}
 
 export function listenForRandomize() {
     const randomizeBtn = document.querySelector(".options .randomize");
 
     randomizeBtn.addEventListener("click", () => {
         gameState.player2.gameboard.randomizeBoard();
-        loadBoard(gameState.getElementFromPlayer(gameState.player2));
+        loadBoard(getElementFromPlayer2());
         showStartOptions();
     });
 }
@@ -25,7 +29,7 @@ export function listenForReset() {
 
     resetBtn.addEventListener("click", () => {
         gameState.player2.gameboard.resetBoard();
-        loadBoard(gameState.getElementFromPlayer(gameState.player2));
+        loadBoard(getElementFromPlayer2());
         resetShipPlacer();
         hideStartOptions();
     });
@@ -65,7 +69,7 @@ export function listenForShipDragAndDrop() {
     // Listen for drop
     let head;
     const userPlayer = gameState.player2;
-    const userBoardElement = gameState.getElementFromPlayer(userPlayer);
+    const userBoardElement = getElementFromPlayer2();
 
     userBoardElement.addEventListener("dragover", (e) => {
         const cellDiv = e.target;

@@ -51,7 +51,7 @@ section.board {
     &.disabled {
         pointer-events: none;
         cursor: not-allowed;
-        opacity: 0.6;
+        /* opacity: 0.6; */
     }
 }
 
@@ -114,3 +114,26 @@ div.ship-to-place {
         cursor: pointer;
     }
 }
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 3rem;
+}
+
+dialog.start-game-modal {
+    p.welcome {
+        font-size: 2rem;
+        font-weight: bold
+    }
+}
+
+
