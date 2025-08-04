@@ -1,5 +1,5 @@
 import Player from "./classes/Player";
-import { loadBoard, endGame } from "./domStuff";
+import { loadBoard, endGame, hideStartOptions } from "./domStuff";
 import gameState from "./gameState";
 import { styleSunkenShip } from "./domStuff";
 import Ship from "./classes/Ship";
@@ -18,6 +18,11 @@ export function resetGame() {
     loadBoard(player2Element);
 
     resetShipPlacer()
+
+    hideStartOptions()
+    
+    const shipPlacerOptionsElement = document.querySelector(".options.player-2")
+    shipPlacerOptionsElement.style.display = "block"
 }
 
 export function processAttack(cell, attackedPlayer) {

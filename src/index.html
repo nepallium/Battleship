@@ -7,13 +7,27 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=replay"
         />
+
+        <!-- fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IM+Fell+Great+Primer+SC&display=swap"
+            rel="stylesheet"
+        />
         <title>Battleship</title>
     </head>
     <body>
-        <header></header>
+        <header>
+            <h1>BATTLESHIP</h1>
+        </header>
 
+        <section class="top">
+            <p>Place your ships on your board</p>
+            <button class="start-game" style="display: none">Start</button>
+        </section>
         <main>
-            <section class="player-1 board"></section>
+            <section class="player-1 board disabled"></section>
             <section class="player-2 board"></section>
             <section class="setup player-2">
                 <div class="options player-2">
@@ -22,10 +36,17 @@
                 </div>
                 <div class="ship-to-place">
                     <p class="ship-name"></p>
-                    <span class="material-symbols-outlined replay"> replay </span>
+                    <span class="material-symbols-outlined replay">
+                        replay
+                    </span>
                     <div class="ship" draggable="true"></div>
                 </div>
             </section>
         </main>
+
+        <dialog class="end-game-modal" closedby="none">
+            <p></p>
+            <button class="restart-game">Restart</button>
+        </dialog>
     </body>
 </html>

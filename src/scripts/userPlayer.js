@@ -2,27 +2,21 @@ import { computerMakeMove } from "./computerPlayer";
 import { disableBoard } from "./domStuff";
 import { processAttack } from "./gameFunctions";
 import gameState from "./gameState";
-import {
-    listenForRandomize,
-    listenForReset,
-    listenForRotate,
-    listenForShipDragAndDrop,
-} from "./shipDragAndDrop";
 
-export function initializeListeners() {
-    listenForRandomize();
-    listenForReset();
-    listenForShipDragAndDrop();
-    listenForRotate();
+// export function initializeListeners() {
+//     listenForRandomize();
+//     listenForReset();
+//     listenForShipDragAndDrop();
+//     listenForRotate();
 
-    // listen for user clicks on computer's board
-    const compBoardElement = gameState.getElementFromPlayer(gameState.player1);
-    for (const cell of compBoardElement.childNodes) {
-        listenForAttack(cell);
-    }
-}
+//     // listen for user clicks on computer's board
+//     const compBoardElement = gameState.getElementFromPlayer(gameState.player1);
+//     for (const cell of compBoardElement.childNodes) {
+//         listenForAttack(cell);
+//     }
+// }
 
-function listenForAttack(div) {
+export function listenForAttack(div) {
     const playerSectionElement = div.parentElement;
 
     const player = gameState.getPlayerFromElement(playerSectionElement);

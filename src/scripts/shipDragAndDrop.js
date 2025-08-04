@@ -1,9 +1,10 @@
 import {
     loadBoard,
     displayShipToPlace,
-    canStartGame,
+    showStartOptions,
     styleNoDropCells,
     unstyleNoDropCells,
+    hideStartOptions,
 } from "./domStuff";
 import gameState from "./gameState";
 
@@ -15,7 +16,7 @@ export function listenForRandomize() {
     randomizeBtn.addEventListener("click", () => {
         gameState.player2.gameboard.randomizeBoard();
         loadBoard(gameState.getElementFromPlayer(gameState.player2));
-        canStartGame();
+        showStartOptions();
     });
 }
 
@@ -26,6 +27,7 @@ export function listenForReset() {
         gameState.player2.gameboard.resetBoard();
         loadBoard(gameState.getElementFromPlayer(gameState.player2));
         resetShipPlacer();
+        hideStartOptions();
     });
 }
 
@@ -95,14 +97,18 @@ export function listenForShipDragAndDrop() {
 
             if (userPlayer.gameboard.canPlaceShip(ship, head, direction)) {
                 userPlayer.gameboard.addShip(ship, head, direction);
-                userPlayer.gameboard.setAdjacentCells(head, ship.length, direction)
+                userPlayer.gameboard.setAdjacentCells(
+                    head,
+                    ship.length,
+                    direction
+                );
                 loadBoard(userBoardElement);
             } else {
                 return;
             }
 
             if (++shipIdx === userPlayer.gameboard.shipsList.length) {
-                canStartGame();
+                showStartOptions();
             } else {
                 // display the next ship to place
                 displayShipToPlace(

@@ -4,10 +4,10 @@ import "../css/styles.css"
 import Player from "./classes/Player";
 import Gameboard from "./classes/Gameboard";
 import Ship from "./classes/Ship";
-import { displayShipToPlace, loadBoard } from "./domStuff";
-import {resetGame} from "./gameFunctions";
+import { displayShipToPlace, loadBoard, startGame } from "./domStuff";
+import { resetGame } from "./gameFunctions";
 import gameState from "./gameState";
-import { initializeListeners } from "./userPlayer";
+import { initializeListeners } from "./listeners";
 
 // Set up the game with predetermined ship coordinates
 function setupGame() {
@@ -46,4 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupGame();
 
     initializeListeners();
+
+    // start button listener
+    const startBtn = document.querySelector(".start-game")
+    startBtn.addEventListener("click", () => {
+        startGame()
+    })
 });

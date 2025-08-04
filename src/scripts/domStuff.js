@@ -82,11 +82,15 @@ export function enableBoard() {
 }
 
 export function endGame(winner) {
-    const winningPlayer = winner === gameState.player2 ? "User" : "Computer";
+    const winState = winner === gameState.player2 ? "won!" : "lost";
 
     disableBoard(gameState.player1);
     disableBoard(gameState.player2);
-    console.log(`GGs! ${winningPlayer} won!`);
+
+    const modal = document.querySelector("dialog.end-game-modal")
+    modal.showModal()
+    const msg = modal.querySelector("p")
+    msg.textContent = `You ${winState}`
 }
 
 export function displayShipToPlace(shipObj, direction) {
@@ -114,7 +118,29 @@ export function displayShipToPlace(shipObj, direction) {
     shipContainer.dataset.shipName = shipObj.name;
 }
 
-export function canStartGame() {
+export function showStartOptions() {
     const containerElement = document.querySelector(".ship-to-place");
     containerElement.style.display = "none";
+    
+    const msg = document.querySelector(".top > p")
+    msg.style.display = "none"
+    const startBtn = document.querySelector(".start-game")
+    startBtn.style.display = "block"
+}
+
+export function hideStartOptions() {
+    const msg = document.querySelector(".top > p")
+    msg.style.display = "block"
+    const startBtn = document.querySelector(".start-game")
+    startBtn.style.display = "none"
+}
+
+export function startGame() {
+    enableBoard()
+
+    const startBtn = document.querySelector(".start-game")
+    startBtn.style.display = "none"
+
+    const shipPlacerOptionsElement = document.querySelector(".options.player-2")
+    shipPlacerOptionsElement.style.display = "none"
 }
