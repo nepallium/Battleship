@@ -102,7 +102,7 @@ export function endGame(winner) {
 
 export function displayShipToPlace(shipObj, direction) {
     const containerElement = document.querySelector(".ship-to-place");
-    const nameElement = containerElement.querySelector(".ship-name");
+    const nameElement = document.querySelector(".ship-placement .instruction .ship-name");
     const shipContainer = containerElement.querySelector(".ship");
 
     nameElement.textContent = shipObj.name;
@@ -129,8 +129,10 @@ export function showStartOptions() {
     const containerElement = document.querySelector(".ship-to-place");
     containerElement.style.display = "none";
     
-    const msg = document.querySelector("dialog.start-game-modal > p.instruction")
+    const msg = document.querySelector(".ship-placement .instruction")
     msg.style.display = "none"
+    const rotate = document.querySelector("button.rotate")
+    rotate.style.display = "none"
     const startBtn = document.querySelector(".start-game")
     startBtn.style.display = "block"
     
@@ -139,8 +141,10 @@ export function showStartOptions() {
 }
 
 export function hideStartOptions() {
-    const msg = document.querySelector("dialog.start-game-modal > p.instruction")
+    const msg = document.querySelector(".ship-placement .instruction")
     msg.style.display = "block"
+    const rotate = document.querySelector("button.rotate")
+    rotate.style.display = "block"
     const startBtn = document.querySelector(".start-game")
     startBtn.style.display = "none"
 }

@@ -28,23 +28,37 @@
         </main>
         
         <dialog class="start-game-modal" closeby="none">
-            <p class="welcome">Welcome to Battleship</p>
-            <p class="instruction">Drag and drop your ships onto your board</p>
-            <section class="player-2 board"></section>
-            <section class="setup player-2">
-                <div class="options player-2">
-                    <button class="randomize">Random</button>
-                    <button class="reset">Reset</button>
+            <div class="modal-header">
+                <h2 class="welcome">Welcome to Battleship</h2>
+            </div>
+            
+            <div class="modal-content">
+                <div class="board-section">
+                    <section class="player-2 board"></section>
                 </div>
-                <div class="ship-to-place">
-                    <p class="ship-name"></p>
-                    <span class="material-symbols-outlined replay">
-                        replay
-                    </span>
-                    <div class="ship" draggable="true"></div>
+                
+                <div class="setup-section">
+                    <div class="ship-placement">
+                        <div class="instruction">
+                            <span class="instruction 1">Drag and drop your</span>
+                            <span class="ship-name instruction 2">Carrier</span>
+                            <span class="instruction 3">onto your board</span>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="ship-controls">
+                            <button class="rotate">Rotate</button>
+                            <button class="randomize">Random</button>
+                            <button class="reset">Reset</button>
+                        </div>
+                        <button class="start-game">Start Game</button>
+                    </div>
+                    <div class="ship-to-place">
+                        <div class="ship" draggable="true"></div>
+                    </div>
                 </div>
-                <button class="start-game">Start</button>
-            </section>
+            </div>
         </dialog>
 
         <dialog class="end-game-modal" closedby="none">

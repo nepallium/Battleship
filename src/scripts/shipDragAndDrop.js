@@ -15,7 +15,7 @@ const getElementFromPlayer2 = () => {
 }
 
 export function listenForRandomize() {
-    const randomizeBtn = document.querySelector(".options .randomize");
+    const randomizeBtn = document.querySelector(".ship-controls .randomize");
 
     randomizeBtn.addEventListener("click", () => {
         gameState.player2.gameboard.randomizeBoard();
@@ -25,7 +25,7 @@ export function listenForRandomize() {
 }
 
 export function listenForReset() {
-    const resetBtn = document.querySelector(".options .reset");
+    const resetBtn = document.querySelector(".ship-controls .reset");
 
     resetBtn.addEventListener("click", () => {
         gameState.player2.gameboard.resetBoard();
@@ -125,7 +125,7 @@ export function listenForShipDragAndDrop() {
 }
 
 export function listenForRotate() {
-    const rotateBtn = document.querySelector("span.replay");
+    const rotateBtn = document.querySelector("button.rotate");
     const userPlayer = gameState.player2;
 
     rotateBtn.addEventListener("click", () => {

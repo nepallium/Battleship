@@ -21,8 +21,8 @@ export function resetGame() {
 
     hideStartOptions()
     
-    const shipPlacerOptionsElement = document.querySelector(".options.player-2")
-    shipPlacerOptionsElement.style.display = "block"
+    const shipPlacerOptionsElement = document.querySelector(".setup-section")
+    shipPlacerOptionsElement.style.display = "flex"
 
     // Show starting modal
     const startDialog = document.querySelector("dialog.start-game-modal")
