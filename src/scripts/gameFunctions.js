@@ -14,6 +14,7 @@ export function resetGame() {
     const compPlayer = gameState.player1
     compPlayer.gameboard.randomizeBoard()
     loadBoard(gameState.getElementFromPlayer(compPlayer))
+    loadBoard(gameState.getElementFromPlayer(gameState.player2))
 
     // set first player to user
     gameState.currPlayer = gameState.player2;
