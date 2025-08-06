@@ -9,16 +9,15 @@
 }
 
 body {
-    font-family: "Inter", sans-serif;
+    /* font-family: "Inter", sans-serif; */
+    font-family: "Space Grotesk", serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    gap: 1rem;
 }
 
 header {
-    font-family: "IM Fell Great Primer SC", serif;
-
     h1 {
         font-size: 5rem;
         font-weight: 300;
@@ -30,7 +29,7 @@ main {
     display: grid;
     width: max-content;
     grid-template: 1fr max-content / 1fr 1fr;
-    gap: 1rem;
+    gap: 3rem;
 }
 
 section.board {
@@ -316,5 +315,33 @@ dialog.end-game-modal {
 
     p {
         font-size: 1.5rem;
+    }
+
+    button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border: 2px solid #3498db;
+        background: white;
+        color: #3498db;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: #3498db;
+            color: white;
+        }
+    }
+
+    &.win {
+        p {
+            color: #229954;
+        }
+    }
+
+    &.loss {
+        p {
+            color: var(--border-hit-red);
+        }
     }
 }

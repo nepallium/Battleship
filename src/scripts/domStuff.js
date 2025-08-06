@@ -89,15 +89,16 @@ export function enableBoard() {
 }
 
 export function endGame(winner) {
-    const winState = winner === gameState.player2 ? "won!" : "lost";
+    const winState = winner === gameState.player2 ? "win" : "loss";
 
     disableBoard(gameState.player1);
     disableBoard(gameState.player2);
 
     const modal = document.querySelector("dialog.end-game-modal")
     modal.showModal()
+    modal.classList.add(winState)
     const msg = modal.querySelector("p")
-    msg.textContent = `You ${winState}`
+    msg.textContent = winState === "win" ? "You won!" : "You lost"
 }
 
 export function displayShipToPlace(shipObj, direction) {
