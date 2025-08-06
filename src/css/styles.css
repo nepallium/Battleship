@@ -87,20 +87,23 @@ section.board {
 
     &.disabled {
         pointer-events: none;
-        cursor: not-allowed;
-        /* opacity: 0.6; */
+        cursor: default;
+        caret-color: black;
     }
 }
 
 /* COMPUTER */
-section.board.player-1 {
-    .cell:hover {
-        cursor: crosshair;
-    }
+section.board.player-1:hover {
+    cursor: crosshair;
+}
 
-    &.disabled .cell:hover {
+section.board.player-1 {
+    .cell.hit:hover,
+    .cell.sunk:hover,
+    .cell[data-value="1"]:hover {
+        pointer-events: none;
         cursor: default;
-        opacity: 0.6;
+        caret-color: black;
     }
 }
 

@@ -11,14 +11,15 @@ export function resetGame() {
     gameState.player2 = new Player();
 
     // Initialize boards
-    const player1Element = document.querySelector("section.player-1");
-    const player2Element = document.querySelector("section.player-2");
+    const compPlayer = gameState.player1
+    compPlayer.gameboard.randomizeBoard()
+    loadBoard(gameState.getElementFromPlayer(compPlayer))
 
-    loadBoard(player1Element);
-    loadBoard(player2Element);
+    // set first player to user
+    gameState.currPlayer = gameState.player2;
+    
 
-    resetShipPlacer()
-
+    resetShipPlacer();
     hideStartOptions()
     
     const shipPlacerOptionsElement = document.querySelector(".setup-section")

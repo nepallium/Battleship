@@ -42,13 +42,3 @@ function listenForRestartGame() {
     });
 }
 
-function disableEscAndAutofocusDialog() {
-    const dialogs = document.querySelectorAll("dialog");
-    dialogs.forEach((dialog) =>
-        dialog.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                e.preventDefault();
-            }
-        })
-    );
-}

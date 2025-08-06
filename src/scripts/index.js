@@ -43,7 +43,7 @@ function setupGame() {
 
 // Initialize the game
 document.addEventListener('DOMContentLoaded', () => {
-    setupGame();
+    resetGame();
 
     initializeListeners();
 });
