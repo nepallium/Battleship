@@ -19,7 +19,7 @@ function handleAttackClick(div, player) {
         return;
     }
 
-    div.style.pointerEvents = "none";
+    div.classList.add("clicked")
     processAttack(div, player);
 
     // If user sinks

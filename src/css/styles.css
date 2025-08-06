@@ -4,6 +4,8 @@
     --inner-ship-blue: rgb(201, 234, 255);
     --inner-hit-red: rgb(255, 154, 154);
     --border-hit-red: rgb(251, 94, 94);
+    --border-green: #229954;
+    --inner-green: #27ae60;
     --gray-300: rgb(0, 0, 0, 0.3);
     --gray-500: rgb(0, 0, 0, 0.5);
 }
@@ -88,22 +90,19 @@ section.board {
     &.disabled {
         pointer-events: none;
         cursor: default;
-        caret-color: black;
     }
 }
 
 /* COMPUTER */
-section.board.player-1:hover {
-    cursor: crosshair;
-}
-
 section.board.player-1 {
-    .cell.hit:hover,
-    .cell.sunk:hover,
-    .cell[data-value="1"]:hover {
+    .cell.clicked {
         pointer-events: none;
-        cursor: default;
+        cursor: default !important;
         caret-color: black;
+    }
+
+    .cell:not(.clicked) {
+        cursor: crosshair;
     }
 }
 
@@ -128,6 +127,10 @@ section.board.player-2 {
         cursor: not-allowed;
     }
 }
+
+
+
+/* DIALOGS */
 
 dialog {
     position: fixed;
@@ -282,7 +285,7 @@ dialog.start-game-modal {
             padding: 1rem 3rem;
             font-size: 1.3rem;
             font-weight: bold;
-            background: #27ae60;
+            background: var(--inner-green);
             color: white;
             border: none;
             border-radius: 10px;
@@ -292,7 +295,7 @@ dialog.start-game-modal {
             display: none;
 
             &:hover {
-                background-color: #229954;
+                background-color: var(--border-green);
                 transform: translateY(-2px);
                 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             }
@@ -308,12 +311,13 @@ dialog.start-game-modal {
         .modal-content {
             height: 100%;
             display: flex;
-            flex-direction: column !important;
+            flex-direction: column;
         }
     }
 }
 
 dialog.end-game-modal {
+    border-width: 4px;
     gap: 1rem;
 
     p {
@@ -323,28 +327,39 @@ dialog.end-game-modal {
     button {
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
-        border: 2px solid #3498db;
+        border: 2px solid;
         background: white;
-        color: #3498db;
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.2s ease;
-
-        &:hover {
-            background-color: #3498db;
-            color: white;
-        }
     }
 
     &.win {
-        p {
-            color: #229954;
+        color: var(--inner-green);
+        
+        button {
+            border-color: var(--inner-green);
+            color: var(--inner-green);
+
+            &:hover {
+                background-color: #49cc80;
+                /* backdrop-filter: saturate(70%); */
+                color: white;
+            }
         }
     }
 
     &.loss {
-        p {
+        color: var(--border-hit-red);
+
+        button {
+            border-color: var(--border-hit-red);
             color: var(--border-hit-red);
+
+            &:hover {
+                background-color: var(--inner-hit-red);
+                color: white;
+            }
         }
     }
 }
