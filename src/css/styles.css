@@ -1,421 +1,419 @@
 :root {
-    --cell-width: 2rem;
-    --border-ship-blue: rgb(95, 194, 255);
-    --inner-ship-blue: rgb(201, 234, 255);
-    --inner-hit-red: rgb(255, 154, 154);
-    --border-hit-red: rgb(251, 94, 94);
-    --border-green: #229954;
-    --inner-green: #27ae60;
-    --gray-300: rgb(0, 0, 0, 0.3);
-    --gray-500: rgb(0, 0, 0, 0.5);
-    --marine: rgb(44, 62, 80);
+  --cell-width: 2rem;
+  --border-ship-blue: rgb(95, 194, 255);
+  --inner-ship-blue: rgb(201, 234, 255);
+  --inner-hit-red: rgb(255, 154, 154);
+  --border-hit-red: rgb(251, 94, 94);
+  --border-green: #229954;
+  --inner-green: #27ae60;
+  --gray-300: rgb(0, 0, 0, 0.3);
+  --gray-500: rgb(0, 0, 0, 0.5);
+  --marine: rgb(44, 62, 80);
 }
 
 body {
-    font-family: "Space Grotesk", serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  font-family: "Space Grotesk", serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 header {
-    margin-top: 1rem;
-    margin-bottom: 6.2rem;
-    h1 {
-        font-size: 5rem;
-        font-weight: 300;
-        letter-spacing: 5px;
-        color: var(--marine);
-    }
+  margin-top: 1rem;
+  margin-bottom: 6.2rem;
+  h1 {
+    font-size: 5rem;
+    font-weight: 300;
+    letter-spacing: 5px;
+    color: var(--marine);
+  }
 }
 
 main {
-    display: grid;
-    width: max-content;
-    grid-template: 1fr max-content / 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
+  display: grid;
+  width: max-content;
+  grid-template: 1fr max-content / 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
 }
 
 section.board {
-    display: grid;
-    grid-template: repeat(10, 2rem) / repeat(10, 2rem);
-    border-top: 2px solid var(--gray-500);
-    border-left: 2px solid var(--gray-500);
-    border-right: 1px solid var(--gray-500);
-    border-bottom: 1px solid var(--gray-500);
+  display: grid;
+  grid-template: repeat(10, 2rem) / repeat(10, 2rem);
+  border-top: 2px solid var(--gray-500);
+  border-left: 2px solid var(--gray-500);
+  border-right: 1px solid var(--gray-500);
+  border-bottom: 1px solid var(--gray-500);
 
-    .cell {
-        position: relative;
-        /* to position the inner X when hit "absolutely" */
-        border-right: 1px solid var(--gray-300);
-        border-bottom: 1px solid var(--gray-300);
-        width: 2rem;
-        height: 2rem;
-        background-color: white;
-    }
+  .cell {
+    position: relative;
+    /* to position the inner X when hit "absolutely" */
+    border-right: 1px solid var(--gray-300);
+    border-bottom: 1px solid var(--gray-300);
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+  }
 
-    .cell[data-value="1"]::before {
-        content: "";
-        background-color: gray;
-        width: calc(var(--cell-width) / 4);
-        height: calc(var(--cell-width) / 4);
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+  .cell[data-value="1"]::before {
+    content: "";
+    background-color: gray;
+    width: calc(var(--cell-width) / 4);
+    height: calc(var(--cell-width) / 4);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-    .cell[data-value="ship"].hit,
-    .cell[data-value="ship"].sunk {
-        box-shadow: inset 0 0 0 3px var(--border-hit-red) !important;
-        color: var(--border-hit-red);
-    }
+  .cell[data-value="ship"].hit,
+  .cell[data-value="ship"].sunk {
+    box-shadow: inset 0 0 0 3px var(--border-hit-red) !important;
+    color: var(--border-hit-red);
+  }
 
-    .cell[data-value="ship"].hit::before,
-    .cell[data-value="ship"].sunk::before {
-        content: "\00D7";
-        font-size: 1.8rem;
-        font-weight: 500;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        line-height: 1;
-    }
+  .cell[data-value="ship"].hit::before,
+  .cell[data-value="ship"].sunk::before {
+    content: "\00D7";
+    font-size: 1.8rem;
+    font-weight: 500;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+  }
 
-    .cell[data-value="ship"].sunk {
-        color: rgb(255, 229, 229) !important;
-        background-color: var(--inner-hit-red) !important;
-    }
+  .cell[data-value="ship"].sunk {
+    color: rgb(255, 229, 229) !important;
+    background-color: var(--inner-hit-red) !important;
+  }
 
-    &.disabled {
-        pointer-events: none;
-        cursor: default;
-    }
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
 }
 
 /* COMPUTER */
 main section.board.player-1::before {
-    content: 'Enemy';
-    position: absolute;
-    top: -2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: 400;
-    font-size: 1.3rem;
-    color: var(--marine);
+  content: "Enemy";
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: var(--marine);
 
-    &.current-player {
-        font-weight: bold;
-    }
+  &.current-player {
+    font-weight: bold;
+  }
 }
 
 main section.board.player-1.current-player::before {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 section.board.player-1 {
-    position: relative;
+  position: relative;
 
-    .cell.clicked {
-        pointer-events: none;
-        cursor: default !important;
-        caret-color: black;
-    }
+  .cell.clicked {
+    pointer-events: none;
+    cursor: default !important;
+    caret-color: black;
+  }
 
-    .cell:not(.clicked) {
-        cursor: crosshair;
-    }
+  .cell:not(.clicked) {
+    cursor: crosshair;
+  }
 }
 
 /* USER */
 main section.board.player-2::before {
-    content: 'Your fleet';
-    position: absolute;
-    top: -2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: 400;
-    font-size: 1.3rem;
-    color: var(--marine);
+  content: "Your fleet";
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: var(--marine);
 }
 
 main section.board.player-2.current-player::before {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 section.board.player-2 {
-    position: relative;
+  position: relative;
 
-    .cell[data-value="ship"] {
-        box-shadow: inset 0 0 0 3px var(--border-ship-blue);
-        background-color: var(--inner-ship-blue);
-    }
+  .cell[data-value="ship"] {
+    box-shadow: inset 0 0 0 3px var(--border-ship-blue);
+    background-color: var(--inner-ship-blue);
+  }
 
-    .cell.hit {
-        background-color: rgb(226, 242, 255);
-    }
+  .cell.hit {
+    background-color: rgb(226, 242, 255);
+  }
 
-    .cell.active-no-drop:not([data-value="ship"]) {
-        background-color: var(--inner-hit-red);
-        filter: saturate(0.8) brightness(1.2);
-        pointer-events: auto;
-    }
+  .cell.active-no-drop:not([data-value="ship"]) {
+    background-color: var(--inner-hit-red);
+    filter: saturate(0.8) brightness(1.2);
+    pointer-events: auto;
+  }
 
-    .cell.active-no-drop:hover {
-        cursor: not-allowed;
-    }
+  .cell.active-no-drop:hover {
+    cursor: not-allowed;
+  }
 }
 
 @media (max-width: 730px) {
-    main {
-        display: grid;
-        width: max-content;
-        grid-template: 1fr max-content max-content / 1fr;
-        gap: 3.2rem;
-    }
+  main {
+    display: grid;
+    width: max-content;
+    grid-template: 1fr max-content max-content / 1fr;
+    gap: 3.2rem;
+  }
 
-    header {
-        margin-top: 0.2rem;
-        margin-bottom: 1rem;
-    }
+  header {
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
+  }
 }
-
-
 
 /* DIALOGS */
 
 dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    border-width: 1px;
-    padding: 2rem 3rem;
+  border-width: 1px;
+  padding: 2rem 3rem;
 }
 
 dialog[open] {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 dialog.start-game-modal {
-    max-width: 900px;
-    width: 90vw;
-    max-height: 90vh;
-    overflow-y: auto;
+  max-width: 900px;
+  width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
 
-    .modal-header {
-        text-align: center;
+  .modal-header {
+    text-align: center;
 
-        .welcome {
-            margin-bottom: 1.5rem;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--marine);
-        }
+    .welcome {
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--marine);
     }
+  }
 
-    .modal-content {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        height: 323px;
-        /* height of board */
-    }
-
-    .board-section {
-        text-align: center;
-
-        section.board {
-            margin: 0 auto;
-        }
-    }
-
-    .setup-section {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        width: 400px;
-        height: 100%;
-        padding-bottom: 1rem;
-    }
-
-    .top {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-    }
-
-    .ship-placement {
-        .instruction {
-            font-size: 1.2rem;
-            color: #555;
-            line-height: 1.4;
-
-            .ship-name {
-                font-weight: bold;
-                text-decoration: underline;
-                color: #2c3e50;
-            }
-        }
-
-        .instruction.hide {
-            opacity: 0;
-            user-select: none;
-        }
-    }
-
-    .ship-to-place {
-        flex-grow: 1;
-
-        /* for the ship inside */
-        display: flex;
-        align-items: center;
-
-        .ship {
-            /* num of columns determined in JS */
-            display: grid;
-        }
-
-        .cell {
-            height: 2rem;
-            width: 2rem;
-            box-shadow: inset 0 0 0 3px var(--border-ship-blue);
-            background-color: var(--inner-ship-blue);
-        }
-
-        .cell:hover {
-            background-color: var(--inner-ship-blue);
-            filter: brightness(0.9);
-            cursor: move;
-        }
-
-        span {
-            font-size: 2.5rem;
-        }
-
-        span:hover {
-            cursor: pointer;
-        }
-    }
-
-    .controls {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        align-items: center;
-        width: 100%;
-
-        .ship-controls {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-
-            button {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-                border: 2px solid #3498db;
-                background: white;
-                color: #3498db;
-                border-radius: 8px;
-                cursor: pointer;
-                transition: all 0.2s ease;
-
-                &:hover {
-                    background-color: #3498db;
-                    color: white;
-                }
-            }
-        }
-
-        .start-game {
-            padding: 1rem 3rem;
-            font-size: 1.3rem;
-            font-weight: bold;
-            background: var(--inner-green);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: none;
-
-            &:hover {
-                background-color: var(--border-green);
-                transform: translateY(-2px);
-                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            }
-        }
-    }
-}
-
-@media (max-width: 930px) {
-    dialog.start-game-modal {
-        height: 88vh;
-        max-width: max-content;
-
-        .modal-content {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-    }
-}
-
-dialog.end-game-modal {
-    border-width: 4px;
+  .modal-content {
+    display: flex;
     gap: 1rem;
+    align-items: center;
+    height: 323px;
+    /* height of board */
+  }
 
-    p {
-        font-size: 1.5rem;
+  .board-section {
+    text-align: center;
+
+    section.board {
+      margin: 0 auto;
+    }
+  }
+
+  .setup-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    width: 400px;
+    height: 100%;
+    padding-bottom: 1rem;
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .ship-placement {
+    .instruction {
+      font-size: 1.2rem;
+      color: #555;
+      line-height: 1.4;
+
+      .ship-name {
+        font-weight: bold;
+        text-decoration: underline;
+        color: #2c3e50;
+      }
     }
 
-    button {
+    .instruction.hide {
+      opacity: 0;
+      user-select: none;
+    }
+  }
+
+  .ship-to-place {
+    flex-grow: 1;
+
+    /* for the ship inside */
+    display: flex;
+    align-items: center;
+
+    .ship {
+      /* num of columns determined in JS */
+      display: grid;
+    }
+
+    .cell {
+      height: 2rem;
+      width: 2rem;
+      box-shadow: inset 0 0 0 3px var(--border-ship-blue);
+      background-color: var(--inner-ship-blue);
+    }
+
+    .cell:hover {
+      background-color: var(--inner-ship-blue);
+      filter: brightness(0.9);
+      cursor: move;
+    }
+
+    span {
+      font-size: 2.5rem;
+    }
+
+    span:hover {
+      cursor: pointer;
+    }
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    width: 100%;
+
+    .ship-controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      button {
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
-        border: 2px solid;
+        border: 2px solid #3498db;
         background: white;
+        color: #3498db;
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.2s ease;
-    }
 
-    &.win {
-        color: var(--inner-green);
-        
-        button {
-            border-color: var(--inner-green);
-            color: var(--inner-green);
-
-            &:hover {
-                background-color: #49cc80;
-                /* backdrop-filter: saturate(70%); */
-                color: white;
-            }
+        &:hover {
+          background-color: #3498db;
+          color: white;
         }
+      }
     }
 
-    &.loss {
-        color: var(--border-hit-red);
+    .start-game {
+      padding: 1rem 3rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+      background: var(--inner-green);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
 
-        button {
-            border-color: var(--border-hit-red);
-            color: var(--border-hit-red);
-
-            &:hover {
-                background-color: var(--inner-hit-red);
-                color: white;
-            }
-        }
+      &:hover {
+        background-color: var(--border-green);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
     }
+  }
+}
+
+@media (max-width: 930px) {
+  dialog.start-game-modal {
+    height: 88vh;
+    max-width: max-content;
+
+    .modal-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+dialog.end-game-modal {
+  border-width: 4px;
+  gap: 1rem;
+
+  p {
+    font-size: 1.5rem;
+  }
+
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: 2px solid;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  &.win {
+    color: var(--inner-green);
+
+    button {
+      border-color: var(--inner-green);
+      color: var(--inner-green);
+
+      &:hover {
+        background-color: #49cc80;
+        /* backdrop-filter: saturate(70%); */
+        color: white;
+      }
+    }
+  }
+
+  &.loss {
+    color: var(--border-hit-red);
+
+    button {
+      border-color: var(--border-hit-red);
+      color: var(--border-hit-red);
+
+      &:hover {
+        background-color: var(--inner-hit-red);
+        color: white;
+      }
+    }
+  }
 }
