@@ -40,7 +40,7 @@ export function resetShipPlacer() {
     direction = "horizontal";
 
     const containerElement = document.querySelector(".ship-to-place");
-    containerElement.style.display = "inline-block";
+    containerElement.style.display = "flex";
 
     displayShipToPlace(shipsToPlace[0], direction);
 }

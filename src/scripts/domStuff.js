@@ -130,7 +130,7 @@ export function showStartOptions() {
     containerElement.style.display = "none";
     
     const msg = document.querySelector(".ship-placement .instruction")
-    msg.style.display = "none"
+    msg.classList.add("hide")
     const rotate = document.querySelector("button.rotate")
     rotate.style.display = "none"
     const startBtn = document.querySelector(".start-game")
@@ -142,7 +142,7 @@ export function showStartOptions() {
 
 export function hideStartOptions() {
     const msg = document.querySelector(".ship-placement .instruction")
-    msg.style.display = "block"
+    msg.classList.remove("hide")
     const rotate = document.querySelector("button.rotate")
     rotate.style.display = "block"
     const startBtn = document.querySelector(".start-game")

@@ -42,7 +42,8 @@ section.board {
     border-bottom: 1px solid var(--gray-500);
 
     .cell {
-        position: relative; /* to position the inner X when hit "absolutely" */
+        position: relative;
+        /* to position the inner X when hit "absolutely" */
         border-right: 1px solid var(--gray-300);
         border-bottom: 1px solid var(--gray-300);
         width: 2rem;
@@ -126,38 +127,6 @@ section.board.player-2 {
     }
 }
 
-div.ship-to-place {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    .ship {
-        /* num of columns determined in JS */
-        display: grid;
-    }
-
-    .cell {
-        height: 2rem;
-        width: 2rem;
-        box-shadow: inset 0 0 0 3px var(--border-ship-blue);
-        background-color: var(--inner-ship-blue);
-    }
-
-    .cell:hover {
-        background-color: var(--inner-ship-blue);
-        filter: brightness(0.9);
-        cursor: move;
-    }
-
-    span {
-        font-size: 2.5rem;
-    }
-
-    span:hover {
-        cursor: pointer;
-    }
-}
-
 dialog {
     position: fixed;
     top: 50%;
@@ -195,7 +164,8 @@ dialog.start-game-modal {
         display: flex;
         gap: 1rem;
         align-items: center;
-        height: 323px; /* height of board */
+        height: 323px;
+        /* height of board */
     }
 
     .board-section {
@@ -213,6 +183,7 @@ dialog.start-game-modal {
         align-items: center;
         width: 400px;
         height: 100%;
+        padding-bottom: 1rem;
     }
 
     .top {
@@ -220,8 +191,6 @@ dialog.start-game-modal {
         flex-direction: column;
         gap: 1rem;
         align-items: center;
-
-        position: relative;
     }
 
     .ship-placement {
@@ -236,11 +205,45 @@ dialog.start-game-modal {
                 color: #2c3e50;
             }
         }
+
+        .instruction.hide {
+            opacity: 0;
+            user-select: none;
+        }
     }
 
     .ship-to-place {
         flex-grow: 1;
-        margin-block: auto;
+
+        /* for the ship inside */
+        display: flex;
+        align-items: center;
+
+        .ship {
+            /* num of columns determined in JS */
+            display: grid;
+        }
+
+        .cell {
+            height: 2rem;
+            width: 2rem;
+            box-shadow: inset 0 0 0 3px var(--border-ship-blue);
+            background-color: var(--inner-ship-blue);
+        }
+
+        .cell:hover {
+            background-color: var(--inner-ship-blue);
+            filter: brightness(0.9);
+            cursor: move;
+        }
+
+        span {
+            font-size: 2.5rem;
+        }
+
+        span:hover {
+            cursor: pointer;
+        }
     }
 
     .controls {
@@ -249,9 +252,6 @@ dialog.start-game-modal {
         gap: 1.5rem;
         align-items: center;
         width: 100%;
-
-        position: absolute;
-        bottom: 0;
 
         .ship-controls {
             display: flex;
@@ -313,6 +313,7 @@ dialog.start-game-modal {
 
 dialog.end-game-modal {
     gap: 1rem;
+
     p {
         font-size: 1.5rem;
     }
