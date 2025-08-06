@@ -1,5 +1,5 @@
 import Player from "./classes/Player";
-import { loadBoard, endGame, hideStartOptions } from "./domStuff";
+import { loadBoard, endGame, hideStartOptions, emboldenCurrentPlayerTurn } from "./domStuff";
 import gameState from "./gameState";
 import { styleSunkenShip } from "./domStuff";
 import Ship from "./classes/Ship";
@@ -15,7 +15,6 @@ export function resetGame() {
     const compPlayer = gameState.player1
     compPlayer.gameboard.randomizeBoard()
     loadBoard(gameState.getElementFromPlayer(compPlayer))
-    loadBoard(gameState.getElementFromPlayer(gameState.player2))
 
     // set first player to user
     gameState.currPlayer = gameState.player2;
@@ -29,11 +28,7 @@ export function resetGame() {
     startDialog.showModal()
     loadBoard(startDialog.querySelector("section.player-2"));
 
-    // listen for user clicks on computer's board
-    const compBoardElement = gameState.getElementFromPlayer(gameState.player1);
-    for (const cell of compBoardElement.childNodes) {
-        listenForAttack(cell);
-    }
+    emboldenCurrentPlayerTurn()
 }
 
 export function processAttack(cell, attackedPlayer) {

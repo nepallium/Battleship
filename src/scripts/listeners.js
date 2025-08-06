@@ -7,7 +7,6 @@ import {
     listenForRotate,
     listenForShipDragAndDrop,
 } from "./shipDragAndDrop";
-import { listenForAttack } from "./userPlayer";
 
 export function initializeListeners() {
     listenForRandomize();

@@ -63,7 +63,7 @@ export function computerMakeMove() {
         // Continue attacking adjacent cells after delay
         setTimeout(() => {
             computerMakeMove();
-        }, 50);
+        }, 500);
         return; // Exit current function to allow delay
     } else if (selectedDiv.classList.contains("sunk")) {
         // clear adjCoords
@@ -78,7 +78,7 @@ export function computerMakeMove() {
         // Continue playing - game ending is handled in processAttack
         setTimeout(() => {
             computerMakeMove();
-        }, 50);
+        }, 500);
     } else {
         // Computer missed - switch back to user's turn
         gameState.switchTurn();

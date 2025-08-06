@@ -1,6 +1,7 @@
 import gameState from "./gameState";
 import Ship from "./classes/Ship";
 import { listenForStartGame } from "./listeners";
+import { listenForAttack } from "./userPlayer";
 
 export function loadBoard(playerSectionElement) {
     playerSectionElement.innerHTML = "";
@@ -18,12 +19,11 @@ export function loadBoard(playerSectionElement) {
             if (player === gameState.player2) {
                 modifyShipCell(player, cell);
             }
+            else if (player === gameState.player1) {
+            // listen for user clicks on computer's board
+                listenForAttack(cell)
+            }
         }
-    }
-    
-    // Remove borders between ship cells
-    if (player === gameState.player2) {
-        removeShipCellBorders(playerSectionElement);
     }
 }
 
@@ -44,16 +44,16 @@ function modifyShipCell(user, cell) {
 }
 
 export function styleNoDropCells() {
-    const noDropCells = document.querySelectorAll(".no-drop")
-    noDropCells.forEach(cell => {
-        cell.classList.replace("no-drop", "active-no-drop")
-    })
+    const noDropCells = document.querySelectorAll(".no-drop");
+    noDropCells.forEach((cell) => {
+        cell.classList.replace("no-drop", "active-no-drop");
+    });
 }
 export function unstyleNoDropCells() {
-    const noDropCells = document.querySelectorAll(".active-no-drop")
-    noDropCells.forEach(cell => {
-        cell.classList.replace("active-no-drop", "no-drop")
-    })
+    const noDropCells = document.querySelectorAll(".active-no-drop");
+    noDropCells.forEach((cell) => {
+        cell.classList.replace("active-no-drop", "no-drop");
+    });
 }
 
 export function styleSunkenShip(shipCell) {
@@ -94,16 +94,18 @@ export function endGame(winner) {
     disableBoard(gameState.player1);
     disableBoard(gameState.player2);
 
-    const modal = document.querySelector("dialog.end-game-modal")
-    modal.showModal()
-    modal.classList.add(winState)
-    const msg = modal.querySelector("p")
-    msg.textContent = winState === "win" ? "You won!" : "You lost"
+    const modal = document.querySelector("dialog.end-game-modal");
+    modal.showModal();
+    modal.classList.add(winState);
+    const msg = modal.querySelector("p");
+    msg.textContent = winState === "win" ? "You won!" : "You lost";
 }
 
 export function displayShipToPlace(shipObj, direction) {
     const containerElement = document.querySelector(".ship-to-place");
-    const nameElement = document.querySelector(".ship-placement .instruction .ship-name");
+    const nameElement = document.querySelector(
+        ".ship-placement .instruction .ship-name"
+    );
     const shipContainer = containerElement.querySelector(".ship");
 
     nameElement.textContent = shipObj.name;
@@ -129,58 +131,54 @@ export function displayShipToPlace(shipObj, direction) {
 export function showStartOptions() {
     const containerElement = document.querySelector(".ship-to-place");
     containerElement.style.display = "none";
-    
-    const msg = document.querySelector(".ship-placement .instruction")
-    msg.classList.add("hide")
-    const rotate = document.querySelector("button.rotate")
-    rotate.style.display = "none"
-    const startBtn = document.querySelector(".start-game")
-    startBtn.style.display = "block"
-    
+
+    const msg = document.querySelector(".ship-placement .instruction");
+    msg.classList.add("hide");
+    const rotate = document.querySelector("button.rotate");
+    rotate.style.display = "none";
+    const startBtn = document.querySelector(".start-game");
+    startBtn.style.display = "block";
+
     // Add the start game listener when button becomes visible
-    listenForStartGame()
+    listenForStartGame();
 }
 
 export function hideStartOptions() {
-    const msg = document.querySelector(".ship-placement .instruction")
-    msg.classList.remove("hide")
-    const rotate = document.querySelector("button.rotate")
-    rotate.style.display = "block"
-    const startBtn = document.querySelector(".start-game")
-    startBtn.style.display = "none"
+    const msg = document.querySelector(".ship-placement .instruction");
+    msg.classList.remove("hide");
+    const rotate = document.querySelector("button.rotate");
+    rotate.style.display = "block";
+    const startBtn = document.querySelector(".start-game");
+    startBtn.style.display = "none";
 }
 
 export function startGame() {
     // Load the user's ships onto the main game board
     const userBoard = document.querySelector("main section.player-2");
     loadBoard(userBoard);
-    
-    enableBoard()
+
+    enableBoard();
 }
 
-function removeShipCellBorders(boardElement) {
-    const shipCells = boardElement.querySelectorAll('.ship-cell');
-    
-    shipCells.forEach(cell => {
-        const [row, col] = JSON.parse(cell.dataset.position);
-        const shipName = cell.dataset.shipName;
+export function emboldenCurrentPlayerTurn() {
+    if (gameState.currentTurn === "user") {
+        // embolden enemy board
+        const currentPlayerElement = gameState.getElementFromPlayer(
+            gameState.player1
+        );
+        currentPlayerElement.classList.add("current-player");
+
+        const oldPlayerElement = gameState.getElementFromPlayer(gameState.player2);
+        oldPlayerElement.classList.remove("current-player");
+    } 
+    else if (gameState.currentTurn === "computer") {
+        // embolden user board
+        const currentPlayerElement = gameState.getElementFromPlayer(
+            gameState.player2
+        );
+        currentPlayerElement.classList.add("current-player");
         
-        // Check if there's a ship cell to the right
-        if (col < 9) {
-            const rightCell = boardElement.querySelector(`[data-position='[${row}, ${col + 1}]']`);
-            if (rightCell && rightCell.dataset.shipName === shipName) {
-                cell.style.borderRight = 'none';
-                rightCell.style.borderLeft = 'none';
-            }
-        }
-        
-        // Check if there's a ship cell below
-        if (row < 9) {
-            const belowCell = boardElement.querySelector(`[data-position='[${row + 1}, ${col}]']`);
-            if (belowCell && belowCell.dataset.shipName === shipName) {
-                cell.style.borderBottom = 'none';
-                belowCell.style.borderTop = 'none';
-            }
-        }
-    });
+        const oldPlayerElement = gameState.getElementFromPlayer(gameState.player1);
+        oldPlayerElement.classList.remove("current-player");
+    }
 }

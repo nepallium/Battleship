@@ -38,6 +38,6 @@ function handleAttackClick(div, player) {
         // Computer makes moves
         setTimeout(() => {
             computerMakeMove();
-        }, 50);
+        }, 500);
     }
 }
