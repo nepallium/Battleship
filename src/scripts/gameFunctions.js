@@ -4,6 +4,7 @@ import gameState from "./gameState";
 import { styleSunkenShip } from "./domStuff";
 import Ship from "./classes/Ship";
 import { resetShipPlacer } from "./shipDragAndDrop";
+import { listenForAttack } from "./userPlayer";
 
 export function resetGame() {
     // reset gameState
@@ -23,13 +24,16 @@ export function resetGame() {
     resetShipPlacer();
     hideStartOptions()
     
-    const shipPlacerOptionsElement = document.querySelector(".setup-section")
-    shipPlacerOptionsElement.style.display = "flex"
-
     // Show starting modal
     const startDialog = document.querySelector("dialog.start-game-modal")
     startDialog.showModal()
     loadBoard(startDialog.querySelector("section.player-2"));
+
+    // listen for user clicks on computer's board
+    const compBoardElement = gameState.getElementFromPlayer(gameState.player1);
+    for (const cell of compBoardElement.childNodes) {
+        listenForAttack(cell);
+    }
 }
 
 export function processAttack(cell, attackedPlayer) {
