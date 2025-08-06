@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+  <script defer src="main.js"></script></head>
+
+  <body>
+    <header>
+      <h1>BATTLESHIP</h1>
+    </header>
+
+    <main>
+      <section class="player-1 board disabled"></section>
+      <section class="player-2 board"></section>
+    </main>
+
+    <dialog class="start-game-modal" closeby="none">
+      <div class="modal-header">
+        <h2 class="welcome">Welcome to Battleship</h2>
+      </div>
+
+      <div class="modal-content">
+        <div class="board-section">
+          <section class="player-2 board"></section>
+        </div>
+
+        <div class="setup-section">
+          <div class="top">
+            <div class="ship-placement">
+              <div class="instruction">
+                <span class="instruction 1">Drag and drop your</span>
+                <span class="ship-name instruction 2">Carrier</span>
+                <p class="instruction 3">onto your board</p>
+              </div>
+            </div>
+
+            <div class="controls">
+              <div class="ship-controls">
+                <button class="rotate">Rotate</button>
+                <button class="randomize">Random</button>
+                <button class="reset">Reset</button>
+              </div>
+              <button class="start-game">Start Game</button>
+            </div>
+          </div>
+          <div class="ship-to-place">
+            <div class="ship" draggable="true"></div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="end-game-modal" closedby="none">
+      <p></p>
+      <button class="restart-game">Restart</button>
+    </dialog>
+  </body>
+</html>
